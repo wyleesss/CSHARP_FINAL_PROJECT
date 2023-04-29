@@ -63,15 +63,46 @@ internal class User
     }
 }
 
-class Card
+class Card : ICloneable
 {
     public char suit  { get; }
     public int number { get; }
+
+    public Card()
+    {
+
+    }
 
     public Card(int number, char suit)
     {
         this.number = number;
         this.suit = suit;
+    }
+    public void print()
+    {
+        if (number < 11) {
+            Console.Write(number);
+        }
+        else
+        {
+            switch (number) 
+            {
+                case 11:
+                    Console.Write("J");
+                    break;
+                case 12:
+                    Console.Write("Q");
+                    break;
+                case 13:
+                    Console.Write("K");
+                    break;
+                case 14:
+                    Console.Write("A");
+                    break;
+            }
+        }
+
+        Console.Write(suit);
     }
 
     static public List<Card> Schuffle(int min_card, int decks_n = 1)
@@ -110,20 +141,25 @@ class Card
 
     static public List<Card> Mix(List<Card> deck)
     {
-        List<Card> temp = deck;
-        deck.Clear();
+        List<Card> temp = new List<Card>();
+
 
         Random random = new();
         int random_index;
 
-        while (temp.Count > 0)
+        while (deck.Count > 0)
         {
-            random_index = random.Next(0, temp.Count - 1);
+            random_index = random.Next(0, deck.Count - 1);
 
-            deck.Add(temp[random_index]);
-            temp.RemoveAt(random_index);
+            temp.Add(deck[random_index]);
+            deck.RemoveAt(random_index);
         }
 
-        return deck;
+        return temp;
+    }
+
+    public object Clone()
+    {
+        return MemberwiseClone();
     }
 }
