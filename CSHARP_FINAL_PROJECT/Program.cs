@@ -2,8 +2,21 @@
 {
     static void Main()
     {
-        BJ.Black_Jack bj = new BJ.Black_Jack();
-        Console.WriteLine("...");
-        bj.BJ_init();
+        List<Card> cards = new List<Card>();
+        cards = Card.Schuffle(6);
+        cards = Card.Mix(cards);
+        foreach (Card card in cards) 
+        {
+            card.print();
+            Console.Write(" ");
+        }
+
+        Card.sort(cards);
+        Console.WriteLine();
+        foreach (Card card in cards)
+        {
+            card.print();
+            Console.Write(" ");
+        }
     }
 }

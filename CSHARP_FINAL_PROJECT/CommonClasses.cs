@@ -65,7 +65,7 @@ internal class User
 
 class Card : ICloneable
 {
-    public char suit  { get; }
+    public char suit { get; }
     public int number { get; }
 
     public Card()
@@ -85,7 +85,7 @@ class Card : ICloneable
         }
         else
         {
-            switch (number) 
+            switch (number)
             {
                 case 11:
                     Console.Write("J");
@@ -103,6 +103,23 @@ class Card : ICloneable
         }
 
         Console.Write(suit);
+    }
+
+    static public void sort(List<Card> kol) 
+    {
+        Card buff = new();
+        for (int i = 0; i < kol.Count(); i++) 
+        {
+            for (int j = 0; j < kol.Count() - i - 1; j++)
+            {
+                if (kol[j].number > kol[j + 1].number) 
+                {
+                    buff = kol[j];
+                    kol[j] = kol[j + 1];
+                    kol[j + 1] = buff;
+                }
+            }
+        }
     }
 
     static public List<Card> Schuffle(int min_card, int decks_n = 1)
