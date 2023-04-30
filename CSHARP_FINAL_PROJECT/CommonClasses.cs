@@ -80,9 +80,9 @@ class Card : ICloneable
     }
     public void print()
     {
-        if (number < 11) {
+        if (number < 11) 
             Console.Write(number);
-        }
+        
         else
         {
             switch (number)
@@ -105,9 +105,10 @@ class Card : ICloneable
         Console.Write(suit);
     }
 
-    static public void sort(List<Card> kol) 
+    static public List<Card> SortNum(List<Card> kol) 
     {
         Card buff = new();
+
         for (int i = 0; i < kol.Count(); i++) 
         {
             for (int j = 0; j < kol.Count() - i - 1; j++)
@@ -120,6 +121,48 @@ class Card : ICloneable
                 }
             }
         }
+
+        return kol;
+    }
+
+    static public List<Card> SortSuit(List<Card> kol)
+    {
+        Card buff = new();
+
+        for (int i = 0; i < kol.Count(); i++)
+        {
+            for (int j = 0; j < kol.Count() - i - 1; j++)
+            {
+                if (kol[j].suit > kol[j + 1].suit)
+                {
+                    buff = kol[j];
+                    kol[j] = kol[j + 1];
+                    kol[j + 1] = buff;
+                }
+            }
+        }
+
+        return kol;
+    }
+
+    static public List<Card> SortSuit(List<Card> kol, char trump)
+    {
+        Card buff = new();
+
+        for (int i = 0; i < kol.Count(); i++)
+        {
+            for (int j = 0; j < kol.Count() - i - 1; j++)
+            {
+                if (kol[j].suit == trump && kol[j + 1].suit != trump)
+                {
+                    buff = kol[j];
+                    kol[j] = kol[j + 1];
+                    kol[j + 1] = buff;
+                }
+            }
+        }
+
+        return kol;
     }
 
     static public List<Card> Schuffle(int min_card, int decks_n = 1)
@@ -178,5 +221,36 @@ class Card : ICloneable
     public object Clone()
     {
         return MemberwiseClone();
+    }
+
+    public override string ToString()
+    {
+        string res = string.Empty;
+
+        if (number < 11)
+            res = number.ToString();
+
+        else
+        {
+            switch (number)
+            {
+                case 11:
+                    res = "J";
+                    break;
+                case 12:
+                    res = "Q";
+                    break;
+                case 13:
+                    res = "K";
+                    break;
+                case 14:
+                    res = "A";
+                    break;
+            }
+        }
+
+        res += suit;
+
+        return res;
     }
 }

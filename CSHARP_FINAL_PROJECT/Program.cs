@@ -1,22 +1,12 @@
-﻿class Program
+﻿using System.Text;
+class Program
 {
     static void Main()
     {
-        List<Card> cards = new List<Card>();
-        cards = Card.Schuffle(6);
-        cards = Card.Mix(cards);
-        foreach (Card card in cards) 
-        {
-            card.print();
-            Console.Write(" ");
-        }
+        Console.OutputEncoding = Encoding.UTF8;
 
-        Card.sort(cards);
-        Console.WriteLine();
-        foreach (Card card in cards)
-        {
-            card.print();
-            Console.Write(" ");
-        }
+        Durak.Game game = new(2, new("also_bot", new()), new());
+
+        game.Start();
     }
 }

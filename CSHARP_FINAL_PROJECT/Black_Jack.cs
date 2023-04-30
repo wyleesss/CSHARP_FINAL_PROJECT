@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BJ
+﻿namespace BJ
 {
     class Black_Jack
     {
@@ -120,4 +114,3 @@ namespace BJ
         public int score2 = 0;
     }
 }
-
