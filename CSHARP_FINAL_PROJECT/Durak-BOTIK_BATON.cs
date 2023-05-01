@@ -40,33 +40,7 @@
             if (game_table.Count == 0)
             {
                 Random r = new();
-                bool only_koz = true;
-
-                foreach (Card card in koloda) 
-                {
-                    if (card.suit != koz) 
-                    {
-                        only_koz = false;
-                        break;
-                    }
-                }
-
-                if (!only_koz)
-                {
-                    int random_index;
-
-                    do
-                    {
-                        random_index = r.Next(0, koloda.Count());
-                    } 
-                    while (koloda[random_index].suit == koz);
-
-                    return random_index;
-                }
-                else
-                {
-                    return r.Next(0, koloda.Count());
-                }
+                return r.Next(0, koloda.Count());
             }
             else if (game_table.Count <= 12)
             {
