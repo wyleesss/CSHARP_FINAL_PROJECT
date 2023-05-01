@@ -5,7 +5,6 @@
 
 namespace Durak
 {
-    using System.Threading;
     delegate void print_info();
 
     class Game
