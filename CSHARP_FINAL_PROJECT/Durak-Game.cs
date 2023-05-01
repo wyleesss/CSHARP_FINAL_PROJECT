@@ -104,7 +104,10 @@ namespace Durak
             player.koloda = Card.SortNum(player.koloda);
             player.koloda = Card.SortSuit(player.koloda);
             player.koloda = Card.SortSuit(player.koloda, trump_suit);
+
             bb.koloda = Card.SortNum(bb.koloda);
+            bb.koloda = Card.SortSuit(bb.koloda);
+            bb.koloda = Card.SortSuit(bb.koloda, trump_suit);
         }
 
         public void print_game_table()
