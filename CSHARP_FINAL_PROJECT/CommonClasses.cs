@@ -202,8 +202,6 @@ class Card : ICloneable
     static public List<Card> Mix(List<Card> deck)
     {
         List<Card> temp = new List<Card>();
-
-
         Random random = new();
         int random_index;
 
