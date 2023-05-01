@@ -5,8 +5,7 @@ class Program
     {
         Console.OutputEncoding = Encoding.UTF8;
 
-        Durak.Game game = new(9, new("also_bot", new()), new());
-
-        game.Start();
+        BJ.Black_Jack bj = new BJ.Black_Jack();
+        bj.BJ_init();
     }
 }
