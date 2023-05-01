@@ -28,6 +28,7 @@
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("×××××××[YOUR MOVE]×××××××\n");
                 info();
 
                 Console.Write("\n");
@@ -104,6 +105,7 @@
             while (true)
             {
                 Console.Clear();
+                Console.WriteLine("×××××××[YOUR MOVE]×××××××\n");
                 info();
 
                 Console.Write("\n");

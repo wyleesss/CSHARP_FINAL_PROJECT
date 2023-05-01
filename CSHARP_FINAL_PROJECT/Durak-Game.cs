@@ -1,11 +1,10 @@
-﻿// таймери, повідомлення
-// можливість докинути карти коли бот бере (не за щоку)
+﻿// можливість докинути карти коли бот бере (не за щоку)
 // параметри гри (?)
 // рефакторинг
-// покращення логіки бота
 
 namespace Durak
 {
+    using System.Threading;
     delegate void print_info();
 
     class Game
@@ -169,6 +168,15 @@ namespace Durak
             player.print_cards();
         }
 
+        public void ConsoleUpdate(string message, int ms = 1500)
+        {
+            Console.Clear();
+            Console.WriteLine(message + "\n");
+            print_info();
+            Console.Write("\n");
+            Thread.Sleep(ms);
+        }
+
         public void mixing()
         {
             koloda = Card.Mix(rebound);
@@ -187,6 +195,8 @@ namespace Durak
                 {
                     if (first_rebound && moves_it == 10)
                     {
+                        ConsoleUpdate("~~~~~~~[END OF THE ATTACK]~~~~~~~", 2500);
+
                         first_rebound = false;
                         moves_it = 0;
 
@@ -202,6 +212,8 @@ namespace Durak
                     }
                     else if (moves_it == 12)
                     {
+                        ConsoleUpdate("~~~~~~~[END OF THE ATTACK]~~~~~~~", 2500);
+
                         moves_it = 0;
 
                         foreach (var card in game_table)
@@ -224,8 +236,13 @@ namespace Durak
                         game_table.Add(player.koloda[att]);
                         player.koloda.RemoveAt(att);
 
+                        ConsoleUpdate("×××××××[OPPONENT MOVE]×××××××");
+
                         if (koloda.Count == 0 && player.koloda.Count == 0)
-                            break;
+                        {
+                            ConsoleUpdate("+++++++[WIN]+++++++", 0);
+                            return;
+                        }
 
                         var def = bb.defense(game_table[game_table.Count - 1]);
 
@@ -237,13 +254,19 @@ namespace Durak
                             bb.koloda.RemoveAt(def);
 
                             if (koloda.Count <= 6 && bb.koloda.Count == 0)
-                                break;
+                            {
+                                ConsoleUpdate("-------[DEFEAT]-------", 0);
+                                return;
+                            }
+
 
                             continue;
                         }
                         else
                         {
                             moves_it = 0;
+
+                            ConsoleUpdate("~~~~~~~[OPPONENT TAKES CARDS]~~~~~~~", 2500);
 
                             foreach (var card in game_table)
                                 bb.koloda.Add(card);
@@ -259,7 +282,12 @@ namespace Durak
                     }
                     else
                     {
+                        if (first_rebound)
+                            first_rebound = false;
+
                         moves_it = 0;
+
+                        ConsoleUpdate("~~~~~~~[END OF THE ATTACK]~~~~~~~", 2500);
 
                         foreach (var card in game_table)
                             rebound.Add(card);
@@ -275,6 +303,8 @@ namespace Durak
                 {
                     if (first_rebound && moves_it == 10)
                     {
+                        ConsoleUpdate("~~~~~~~[END OF THE ATTACK]~~~~~~~", 2500);
+
                         first_rebound = false;
                         moves_it = 0;
 
@@ -290,6 +320,8 @@ namespace Durak
                     }
                     else if (moves_it == 12)
                     {
+                        ConsoleUpdate("~~~~~~~[END OF THE ATTACK]~~~~~~~", 2500);
+
                         moves_it = 0;
 
                         foreach (var card in game_table)
@@ -303,6 +335,8 @@ namespace Durak
                         continue;
                     }
 
+                    ConsoleUpdate("×××××××[OPPONENT MOVE]×××××××");
+
                     var att = bb.attack(game_table);
 
                     if (att != -1)
@@ -313,7 +347,10 @@ namespace Durak
                         bb.koloda.RemoveAt(att);
 
                         if (koloda.Count == 0 && bb.koloda.Count == 0)
-                            break;
+                        {
+                            ConsoleUpdate("-------[DEFEAT]-------", 0);
+                            return;
+                        }
 
                         var def = player.defense(game_table[game_table.Count - 1], print_info);
 
@@ -325,12 +362,17 @@ namespace Durak
                             player.koloda.RemoveAt(def);
 
                             if (koloda.Count <= 6 && player.koloda.Count == 0)
-                                break;
+                            {
+                                ConsoleUpdate("+++++++[WIN]++++++++", 0);
+                                return;
+                            }
 
                             continue;
                         }
                         else
                         {
+                            ConsoleUpdate("~~~~~~~[YOU TAKE THE CARDS]~~~~~~~", 2500);
+
                             moves_it = 0;
 
                             foreach (var card in game_table)
@@ -345,7 +387,12 @@ namespace Durak
                     }
                     else
                     {
+                        if (first_rebound)
+                            first_rebound = false;
+
                         moves_it = 0;
+
+                        ConsoleUpdate("~~~~~~~[END OF THE ATTACK]~~~~~~~", 2500);
 
                         foreach (var card in game_table)
                             rebound.Add(card);
@@ -359,8 +406,15 @@ namespace Durak
                 }
             }
 
-            Console.Clear();
-            print_info();
+            if (player.koloda.Count == 0)
+            {
+                ConsoleUpdate("+++++++[WIN]++++++++", 0);
+            }
+            else
+            {
+                ConsoleUpdate("-------[DEFEAT]-------", 0);
+            }
+
         }
     }
 }

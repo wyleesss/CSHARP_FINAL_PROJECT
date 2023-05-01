@@ -7,9 +7,7 @@
         public char koz { get; set; }
 
         public BOTIK_BATON()
-        {
-            koloda = Card.SortNum(koloda);
-        }
+        { }
 
         bool check_cards(Card ch)
         {
