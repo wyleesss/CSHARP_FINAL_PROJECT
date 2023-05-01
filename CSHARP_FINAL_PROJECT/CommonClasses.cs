@@ -1,4 +1,5 @@
-﻿class Achivements
+﻿[Serializable]
+class Achivements
 {
     public string name { get; }
     public long   award_money { get; }
@@ -17,6 +18,7 @@
     }
 }
 
+[Serializable]
 class SpecialAbilities
 {
     string name { get; }
@@ -30,31 +32,28 @@ class SpecialAbilities
     public void to_do() {  }
 }
 
+[Serializable]
 internal class User
 {
-    public int id { get; }
     public string user_name { get; set; }
     public string login { get; }
     public string password { get; set; }
-    public string gmail { get; set; }
 
     public long durak_b { get; set; }
     public long black_jack_b { get; set; }
 
     public int golden_cards { get; set; }
 
-    List<Achivements> achives = new();
-    List<SpecialAbilities> durak_abilities = new();
+    List<Achivements> achives;
+    List<SpecialAbilities> durak_abilities;
 
-    public User(int id, string user_name, string login, string password, string gmail,
+    public User(string user_name, string login, string password,
                 long durak_b, long black_jack_b, int golden_cards,
                 List<Achivements> achives, List<SpecialAbilities> durak_abilities)
     {
-        this.id = id;
         this.user_name = user_name;
         this.login = login;
         this.password = password;
-        this.gmail = gmail;
         this.durak_b = durak_b;
         this.black_jack_b = black_jack_b;
         this.golden_cards = golden_cards;

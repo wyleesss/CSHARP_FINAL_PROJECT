@@ -21,7 +21,6 @@
             {
                 if (card.number > 9)
                 {
-
                     if(card.number !=14)
                     {
                         d.score += 10;
@@ -98,9 +97,9 @@
         public void BJ_init()
         {
             int bid = p.bid();
-            p.hand.Add(new Card(14, '♥'));
+            p.hand.Add(deck[0]);
             deck.Remove(deck[0]);
-            p.hand.Add(new Card(10, '♥'));
+            p.hand.Add(deck[0]);
             deck.Remove(deck[0]);
             d.hand.Add(deck[0]);
             deck.Remove(deck[0]);

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MM
+﻿namespace MM
 {
     class Player
     {
@@ -43,7 +36,7 @@ namespace MM
             {
                 // firstcolumn = -6; firstrow = -6; secondcolumn = -6; secondrow = -6;
                 Console.WriteLine("Enter the position of the first card:");
-                str = Console.ReadLine();
+                str = new string(Console.ReadLine());
                 arr = str.Split(',', '.', ' ');
                 try
                 {
@@ -60,7 +53,7 @@ namespace MM
                 while (secondcolumn >= 5 || secondrow >= 8 || secondcolumn < 0 || secondrow < 0 || (secondcolumn==firstcolumn && firstrow==secondrow))
                 {
                     Console.WriteLine("Enter the position of the second card:");
-                    str = Console.ReadLine();
+                    str = new string(Console.ReadLine());
                     arr = str.Split(',');
                 try 
                 {
