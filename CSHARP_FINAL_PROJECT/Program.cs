@@ -10,9 +10,15 @@ class Program
 
         //User user = sign_menu();
 
-        Game game = new(11, new("test", new()), new());
-        game.Start();
+        BJ.Black_Jack bj = new BJ.Black_Jack();
+        bj.BJ_init();
 
+/*                Game game = new(11, new("test", new()), new());
+                game.Start();*/
+
+        //        BJ.Black_Jack bj = new BJ.Black_Jack();
+        //        bj.BJ_init();
+        //
 
         //BinaryFormatter binaryFormatter = new();
 

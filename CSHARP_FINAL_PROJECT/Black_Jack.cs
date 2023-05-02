@@ -14,6 +14,7 @@
 
         public void print_menu()
         {
+            string buf = "";
             d.score = 0;
             p.score = 0;
 
@@ -41,28 +42,31 @@
                     leaver_d=true;
                 }
             }
-            Console.Write($"total: {d.score}");
-            if (d.score2 > 0 && d.score2 < 22) {
-                Console.Write($"/{d.score2}");
-            }
-            Console.WriteLine();
-            Console.Write($"Dealer:                      ");
-            foreach(Card card in d.hand)
+            buf="";
+            UserInterface.set_and_print("[]DEALER[]");
+            foreach (Card card in d.hand)
             {
-                card.print();
+                buf += "{";
+                buf += card.ToString();
+                buf += "}";
 
             }
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.Write("You:                         ");
-            foreach (Card card in p.hand)
-            {
-                card.print();
+            buf += "(";
+            buf += d.score;
+            if (d.score2 > 0 && d.score2 < 22) {
+                buf += "/";
+                buf += d.score2;
             }
-            Console.WriteLine();
+            buf += "p)";
+            UserInterface.set_and_print(buf);
+            UserInterface.set_and_print("*************");
+            UserInterface.set_and_print("*             *");
+          UserInterface.set_and_print("*               *");
+         UserInterface.set_and_print("*                 *");
+         UserInterface.set_and_print("*                 *");
+          UserInterface.set_and_print("*               *");
+           UserInterface.set_and_print("*             *");
+            UserInterface.set_and_print("*************");
             foreach (Card card in p.hand)
             {
                 if (card.number > 9)
@@ -87,12 +91,24 @@
                     leaver_p = true;
                 }
             }
-            Console.Write($"total: {p.score}");
+            buf = "";
+            foreach (Card card in p.hand)
+            {
+                buf += "{";
+                buf += card.ToString();
+                buf += "}";
+
+            }
+            buf += "(";
+            buf += p.score;
             if (p.score2 > 0 && p.score2 < 22)
             {
-                Console.Write($"/{p.score2}");
+                buf += "/";
+                buf += p.score2;
             }
-            Console.WriteLine();
+            buf += "p)";
+            UserInterface.set_and_print(buf);
+            UserInterface.set_and_print("[]YOU[]");
         }
         public void BJ_init()
         {
