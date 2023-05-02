@@ -117,15 +117,15 @@ namespace Durak
             {
                 if ((i + 1) % 2 == 0)
                 {
-                    fullLines[fullLines.Count - 1] += $" ×<- {{{game_table[i],-3}}}";
+                    fullLines[fullLines.Count - 1] += $" ×<- {{{game_table[i], -3}}}";
                 }
                 else if (i != 0 && i != 4 && i != 8)
                 {
-                    fullLines[fullLines.Count - 1] += $"   {{{game_table[i],-3}}}";
+                    fullLines[fullLines.Count - 1] += $"   {{{game_table[i], -3}}}";
                 }
                 else
                 {
-                    fullLines.Add($"{{{game_table[i],-3}}}");
+                    fullLines.Add($"{{{game_table[i], -3}}}");
                 }
             }
 
@@ -184,7 +184,6 @@ namespace Durak
                 else
                     print_game_table();
 
-                print_game_table();
                 Console.Write("\n\n\n\n");
             }
             else
@@ -195,7 +194,6 @@ namespace Durak
                 else
                     print_game_table();
 
-                print_game_table();
                 Console.Write("\n\n\n");
             }
 
@@ -215,14 +213,14 @@ namespace Durak
             player.print_cards();
         }
 
-        private void ConsoleUpdate(string message, int ms = 1500)
+        private void ConsoleUpdate(string message, int ms = 1500, bool is_shedding = false)
         {
             Console.Clear();
 
             UserInterface.set_and_print(message);
             Console.Write("\n");
 
-            print_info(false);
+            print_info(is_shedding);
             Console.Write("\n");
 
             Thread.Sleep(ms);
@@ -316,19 +314,23 @@ namespace Durak
                         {
                             moves_it = 0;
 
-                            foreach (var card in game_table)
-                                bb.koloda.Add(card);
-
                             int add;
 
-                            while (((add = player.additional_attack(game_table, print_info)) != -1)
-                                  && ((game_table.Count <= 12 && !first_rebound) || (game_table.Count <= 10 && first_rebound))) 
+                            while ((first_rebound && game_table.Count <= 10) || (!first_rebound && game_table.Count <= 12))
                             {
+                                add = player.additional_attack(game_table, print_info);
+
+                                if (add == -1)
+                                    break;
+
                                 game_table.Add(player.koloda[add]);
                                 player.koloda.RemoveAt(add);
                             }
 
-                            ConsoleUpdate("~~~~~~~[END OF THE ATTACK]~~~~~~~", 2500);
+                            foreach (var card in game_table)
+                                bb.koloda.Add(card);
+
+                            ConsoleUpdate("~~~~~~~[END OF THE ATTACK]~~~~~~~", 2500, true);
                             game_table.Clear();
                             give_cards_plpr();
                             sort_cards();
@@ -405,6 +407,7 @@ namespace Durak
                         if (koloda.Count == 0 && bb.koloda.Count == 0)
                         {
                             ConsoleUpdate("-------[DEFEAT]-------", 0);
+                            Console.ReadKey();
                             return;
                         }
 
@@ -420,6 +423,7 @@ namespace Durak
                             if (koloda.Count <= 6 && player.koloda.Count == 0)
                             {
                                 ConsoleUpdate("+++++++[WIN]++++++++", 0);
+                                Console.ReadKey();
                                 return;
                             }
 

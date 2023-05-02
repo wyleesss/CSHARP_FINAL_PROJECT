@@ -36,7 +36,7 @@
                     }
 
                     if (koloda[i].suit == att.suit && koloda[i].number > att.number) return i;
-                    else if ((koloda[i].suit == koz && game_koloda_count <= 6) || (take_count + 1) % 2 == 0) return i;
+                    else if ((koloda[i].suit == koz && game_koloda_count <= 6) || (koloda[i].suit == koz && (take_count + 1) % 2 == 0)) return i;
                 }
             }
 

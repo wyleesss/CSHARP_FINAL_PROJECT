@@ -10,11 +10,11 @@ class Program
 
         //User user = sign_menu();
 
-        BJ.Black_Jack bj = new BJ.Black_Jack();
-        bj.BJ_init();
+        User test = new("test", "test", "test", 0, 0, 0, new(), new());
+        main_menu(test);
 
-/*                Game game = new(11, new("test", new()), new());
-                game.Start();*/
+        /*                Game game = new(11, new("test", new()), new());
+                        game.Start();*/
 
         //        BJ.Black_Jack bj = new BJ.Black_Jack();
         //        bj.BJ_init();

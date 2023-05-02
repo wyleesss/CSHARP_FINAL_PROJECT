@@ -1,17 +1,22 @@
-﻿using YonatanMankovich.SimpleConsoleMenus;
+﻿using BJ;
+using Durak;
+using Microsoft.CSharp.RuntimeBinder;
+using System.ComponentModel;
+using System.Xml.Linq;
+using YonatanMankovich.SimpleConsoleMenus;
 
 static class UserInterface
 {
     private static int WIDTH = Console.WindowWidth;
     internal delegate void print_delegate(object? obj);
 
-    internal static void set_and_print(string[] elements, print_delegate? d = null)
+    internal static void set_and_print(string[] elements, print_delegate? d = null, int step = 0)
     {
         int left;
 
         foreach (string element in elements)
         {
-            left = (WIDTH / 2) - (element.Length / 2);
+            left = (WIDTH / 2) - ((element.Length + step) / 2);
             Console.SetCursorPosition(left, Console.CursorTop);
 
             if (d != null)
@@ -26,9 +31,9 @@ static class UserInterface
         }
     }
 
-    internal static void set_and_print(string element, print_delegate? d = null)
+    internal static void set_and_print(string element, print_delegate? d = null, int step = 0)
     {
-        int left = (WIDTH / 2) - (element.Length / 2);
+        int left = (WIDTH / 2) - ((element.Length + step) / 2);
         Console.SetCursorPosition(left, Console.CursorTop);
 
         if (d != null)
@@ -133,6 +138,175 @@ static class UserInterface
 
         set_and_print(new[] { text1, text2, text3, text4, text5, text6 });
     }
+
+    internal static void loading() 
+    {
+        string text = "Loading ";
+        set_and_print(text, Console.Write, 10);
+        string x = "█";
+        for (int i = 0; i < 25; i++)
+        {
+            Console.Write(x);
+            if(i < 10) Thread.Sleep(400);
+            if (i >= 10 && i < 20) Thread.Sleep(250);
+            if (i >= 20) Thread.Sleep(75);
+        }
+    }
+
+    internal static void main_menu(User us) 
+    {
+        IEnumerable<string> options = new List<string>() { "Durak   ", "BlackJack", "Memory  ","How use ","Exit    " };
+        SimpleConsoleMenu menu = new SimpleConsoleMenu("Choose an option:", options);
+
+
+        IEnumerable<string> options_1 = new List<string>() { "24  ", "32  ", "36  ", "52  ", "Exit" };
+        SimpleConsoleMenu decks = new SimpleConsoleMenu("Choose deck:", options_1);
+
+        IEnumerable<string> options_2 = new List<string>() { "Start", "Exit " };
+        SimpleConsoleMenu otherg = new SimpleConsoleMenu("Choose an option:", options_2);
+
+        while (true)
+        {
+            print_menu_logo();
+            Console.WriteLine("\n\n\n\n\n\n\n");
+
+            menu.Show();
+            Game game;
+            bool run = true;
+            switch (menu.SelectedIndex)
+            {
+                case 0:
+                    while (run)
+                    {
+                        Console.Clear();
+                        Console.WriteLine();
+                        print_durak_logo();
+                        Console.WriteLine("\n\n\n\n\n\n");
+
+                        decks.Show();
+
+                        switch (decks.SelectedIndex) 
+                        {
+                            case 0:
+                                Console.Clear();
+                                Console.WriteLine();
+                                print_durak_logo();
+                                Console.WriteLine("\n\n\n");
+                                loading();
+
+
+                                game = new(9, new(us.user_name, new()), new());
+                                game.Start();
+
+                                break;
+                            case 1:
+                                Console.Clear();
+                                Console.WriteLine();
+                                print_durak_logo();
+                                Console.WriteLine("\n\n\n");
+                                loading();
+
+
+                                game = new(7, new(us.user_name, new()), new());
+                                game.Start();
+
+                                break;
+                            case 2:
+                                Console.Clear();
+                                Console.WriteLine();
+                                print_durak_logo();
+                                Console.WriteLine("\n\n\n");
+                                loading();
+
+
+                                game = new(6, new(us.user_name, new()), new());
+                                game.Start();
+
+                                break;
+
+                            case 3:
+                                Console.Clear();
+                                Console.WriteLine();
+                                print_durak_logo();
+                                Console.WriteLine("\n\n\n");
+                                loading();
+
+
+                                game = new(2, new(us.user_name, new()), new());
+                                game.Start();
+
+                                break;
+                            case 4:
+                                run = false;
+                                Console.Clear();
+                                break;
+                        }
+                    }
+                    break;
+                case 1:
+                    while (run)
+                    {
+                        Console.Clear();
+                        Console.WriteLine();
+                        print_bj_logo();
+                        Console.WriteLine("\n\n\n\n\n\n");
+
+                        otherg.Show();
+
+                        switch (otherg.SelectedIndex)
+                        {
+                            case 0:
+                                Console.Clear();
+                                Console.WriteLine();
+                                print_bj_logo();
+                                Console.WriteLine("\n\n\n");
+                                loading();
+                                Black_Jack bj = new();
+                                bj.BJ_init();
+                                break;
+                            case 1:
+                                run = false;
+                                Console.Clear();
+                                break;
+                        }
+                    }
+                    break;
+                case 2:
+                    while (run)
+                    {
+                        Console.Clear();
+                        Console.WriteLine();
+                        print_memory_logo();
+                        Console.WriteLine("\n\n\n\n\n\n");
+
+                        otherg.Show();
+
+                        switch (otherg.SelectedIndex)
+                        {
+                            case 0:
+                                Console.Clear();
+                                Console.WriteLine();
+                                print_memory_logo();
+                                Console.WriteLine("\n\n\n");
+                                loading();
+                                MM.Memory m = new();
+                                m.go();
+                                break;
+                            case 1:
+                                run = false;
+                                Console.Clear();
+                                break;
+                        }
+                    }
+                    break;
+                case 4:
+                    Console.Clear();
+                    Environment.Exit(0);
+                    break; 
+            }
+        }
+    }
+
     internal static User sign_menu()
     {
         string input_user_name = string.Empty;

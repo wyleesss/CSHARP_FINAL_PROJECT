@@ -16,6 +16,12 @@
 
         public void print_cards()
         {
+            if (koloda.Count == 0)
+            {
+                UserInterface.set_and_print("none");
+                return;
+            }
+
             string fullLine = string.Empty;
 
             foreach (Card card in koloda)
