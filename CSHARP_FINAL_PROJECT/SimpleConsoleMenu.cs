@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace YonatanMankovich.SimpleConsoleMenus
+﻿namespace YonatanMankovich.SimpleConsoleMenus
 {
     /// <summary>
     /// Represents a <see cref="ConsoleMenu"/> with string items.

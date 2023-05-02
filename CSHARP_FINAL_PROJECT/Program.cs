@@ -1,6 +1,5 @@
-﻿using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using static MainMenu;
+﻿using System.Text;
+using static UserInterface;
 
 class Program
 {
@@ -8,7 +7,9 @@ class Program
     {
         Console.OutputEncoding = Encoding.UTF8;
 
-        Sign_in_Menu();
+        User user = sign_menu();
+
+
 
 
         //BinaryFormatter binaryFormatter = new();

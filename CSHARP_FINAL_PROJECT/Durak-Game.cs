@@ -2,6 +2,8 @@
 // параметри гри (?)
 // рефакторинг
 // гру на ставки, ачівки, абілки, рейтинг
+// вирівняти по центру
+// меню з налаштуваннями
 
 namespace Durak
 {
@@ -168,7 +170,7 @@ namespace Durak
             player.print_cards();
         }
 
-        public void ConsoleUpdate(string message, int ms = 1500)
+        private void ConsoleUpdate(string message, int ms = 1500)
         {
             Console.Clear();
             Console.WriteLine(message + "\n");
@@ -244,7 +246,7 @@ namespace Durak
                             return;
                         }
 
-                        var def = bb.defense(game_table[game_table.Count - 1]);
+                        var def = bb.defense(game_table[game_table.Count - 1], game_table.Count, koloda.Count);
 
                         if (def != -1)
                         {
@@ -337,7 +339,7 @@ namespace Durak
 
                     ConsoleUpdate("×××××××[OPPONENT MOVE]×××××××");
 
-                    var att = bb.attack(game_table);
+                    var att = bb.attack(game_table, koloda.Count);
 
                     if (att != -1)
                     {

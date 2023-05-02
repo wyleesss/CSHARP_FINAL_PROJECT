@@ -54,16 +54,27 @@
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.LeftArrow:
+
                         if (selectedCardIndex > 0)
                             selectedCardIndex--;
+
+                        else
+                            selectedCardIndex = koloda.Count - 1;
+
                         break;
 
                     case ConsoleKey.RightArrow:
+
                         if (selectedCardIndex < koloda.Count - 1)
                             selectedCardIndex++;
+
+                        else
+                            selectedCardIndex = 0;
+
                         break;
 
                     case ConsoleKey.Enter:
+
                         if (game_table.Count == 0)
                             return selectedCardIndex;
 
@@ -81,6 +92,7 @@
                         break;
 
                     case ConsoleKey.DownArrow:
+
                         if (game_table.Count > 0)
                             return -1;
 
@@ -131,16 +143,27 @@
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.LeftArrow:
+
                         if (selectedCardIndex > 0)
                             selectedCardIndex--;
+
+                        else
+                            selectedCardIndex = koloda.Count - 1;
+
                         break;
 
                     case ConsoleKey.RightArrow:
+
                         if (selectedCardIndex < koloda.Count - 1)
                             selectedCardIndex++;
+
+                        else
+                            selectedCardIndex = 0;
+
                         break;
 
                     case ConsoleKey.Enter:
+
                         if (koloda[selectedCardIndex].suit == koz && att.suit != koz)
                             return selectedCardIndex;
 

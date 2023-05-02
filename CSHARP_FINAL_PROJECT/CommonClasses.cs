@@ -1,4 +1,26 @@
-﻿[Serializable]
+﻿using System.Runtime.Serialization.Formatters.Binary;
+
+static class SerialDB
+{
+    static BinaryFormatter formatter = new();
+
+    internal static bool check(string login, string password)
+    {
+        return false;
+    }
+
+    internal static void push(User user)
+    {
+
+    }
+
+    internal static User take(string login, string password)
+    {
+        return new User("user_name", login, password, 12, 12, 12, new(), new());
+    }
+}
+
+[Serializable]
 class Achivements
 {
     public string name { get; }
@@ -33,7 +55,7 @@ class SpecialAbilities
 }
 
 [Serializable]
-internal class User
+internal class User : ICloneable
 {
     public string user_name { get; set; }
     public string login { get; }
@@ -59,6 +81,11 @@ internal class User
         this.golden_cards = golden_cards;
         this.achives = achives;
         this.durak_abilities = durak_abilities;
+    }
+
+    public object Clone()
+    {
+        return MemberwiseClone();
     }
 }
 

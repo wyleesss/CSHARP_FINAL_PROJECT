@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace YonatanMankovich.SimpleConsoleMenus
+﻿namespace YonatanMankovich.SimpleConsoleMenus
 {
     /// <summary>
     /// Defines methods for creating a <see cref="ConsoleMenu"/>.
