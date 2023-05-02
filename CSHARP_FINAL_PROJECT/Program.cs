@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Durak;
+using System.Text;
 using static UserInterface;
 
 class Program
@@ -7,9 +8,10 @@ class Program
     {
         Console.OutputEncoding = Encoding.UTF8;
 
-        User user = sign_menu();
+        //User user = sign_menu();
 
-
+        Game game = new(11, new("test", new()), new());
+        game.Start();
 
 
         //BinaryFormatter binaryFormatter = new();

@@ -92,7 +92,7 @@
                             if (only_koz)
                                 return -1;
 
-                            else if (koloda[j].suit == koz && game_koloda_count > 6)
+                            else if (koloda[j].suit == koz && game_koloda_count > 4)
                                 return -1;
 
                             else

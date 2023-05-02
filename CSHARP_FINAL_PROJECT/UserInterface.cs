@@ -3,9 +3,9 @@
 static class UserInterface
 {
     private static int WIDTH = Console.WindowWidth;
-    delegate void print_delegate(object? obj);
+    internal delegate void print_delegate(object? obj);
 
-    static void set_and_print(string[] elements, print_delegate? d = null)
+    internal static void set_and_print(string[] elements, print_delegate? d = null)
     {
         int left;
 
@@ -26,7 +26,7 @@ static class UserInterface
         }
     }
 
-    static void set_and_print(string element, print_delegate? d = null)
+    internal static void set_and_print(string element, print_delegate? d = null)
     {
         int left = (WIDTH / 2) - (element.Length / 2);
         Console.SetCursorPosition(left, Console.CursorTop);
@@ -42,7 +42,7 @@ static class UserInterface
         }
     }
 
-    static bool processed_input(ref string input)
+    internal static bool processed_input(ref string input)
     {
         ConsoleKeyInfo keyInfo;
 

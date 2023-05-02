@@ -1,13 +1,11 @@
-﻿// можливість докинути карти коли бот бере (не за щоку)
-// параметри гри (?)
+﻿// надати боту можливість докинути карти
 // рефакторинг
 // гру на ставки, ачівки, абілки, рейтинг
-// вирівняти по центру
 // меню з налаштуваннями
 
 namespace Durak
 {
-    delegate void print_info();
+    delegate void print_info(bool expression);
 
     class Game
     {
@@ -33,7 +31,7 @@ namespace Durak
 
             Random random = new();
 
-            if (random.Next(1, 14) % 2 == 0)
+            if (random.Next(1, 100) % 2 == 0)
             {
                 player.is_playing = !(bb.is_playing = true);
                 give_cards_bbpr();
@@ -113,59 +111,106 @@ namespace Durak
 
         public void print_game_table()
         {
+            List<string> fullLines = new();
+
             for (int i = 0; i < game_table.Count; i++)
             {
-                if ((i + 1) % 4 == 0)
+                if ((i + 1) % 2 == 0)
                 {
-                    Console.Write(" ×<- ");
-                    Console.Write($"{{{game_table[i],-3}}}");
-                    Console.Write("\n");
+                    fullLines[fullLines.Count - 1] += $" ×<- {{{game_table[i],-3}}}";
                 }
-                else if ((i + 1) % 2 == 0)
+                else if (i != 0 && i != 4 && i != 8)
                 {
-                    Console.Write(" ×<- ");
-                    Console.Write($"{{{game_table[i],-3}}}");
-                    Console.Write("   ");
+                    fullLines[fullLines.Count - 1] += $"   {{{game_table[i],-3}}}";
                 }
                 else
                 {
-                    Console.Write($"{{{game_table[i],-3}}}");
+                    fullLines.Add($"{{{game_table[i],-3}}}");
                 }
             }
 
+            UserInterface.set_and_print(fullLines.ToArray());
             Console.Write("\n");
         }
 
-        public void print_info()
+        public void print_shed_table()
         {
-            Console.Write("OPPONENT:" + (bb.is_playing ? " (attacking)\n" : " (defending)\n") +
-                         $"\"bot::BATON\" [cards:: ({bb.koloda.Count})]\n\n\n\n");
+            List<string> fullLines = new();
+
+            for (int i = 0; i < game_table.Count; i++)
+            {
+                if ((i + 1) % 2 == 0)
+                {
+                    fullLines[fullLines.Count - 1] += $"     {{{game_table[i],-3}}}";
+                }
+                else if (i != 0 && i != 4 && i != 8)
+                {
+                    fullLines[fullLines.Count - 1] += $"   {{{game_table[i],-3}}}";
+                }
+                else
+                {
+                    fullLines.Add($"{{{game_table[i],-3}}}");
+                }
+            }
+
+            UserInterface.set_and_print(fullLines.ToArray());
+            Console.Write("\n");
+        }
+
+        public void print_info(bool is_shedding)
+        {
+            UserInterface.set_and_print("OPPONENT:" + (bb.is_playing ? " (attacking)" : " (defending)"));
+            UserInterface.set_and_print($"\"bot::BATON\" [cards:: ({bb.koloda.Count})]");
+            Console.Write("\n\n\n");
 
             if (game_table.Count == 0)
-                Console.Write("\n\n\n\n");
+                Console.Write("\n\n\n\n\n\n\n");
 
-            else if (game_table.Count <= 3)
+            else if (game_table.Count <= 4)
             {
-                print_game_table();
-                Console.Write("\n\n\n");
+                if (is_shedding)
+                    print_shed_table();
+
+                else
+                    print_game_table();
+
+                Console.Write("\n\n\n\n\n");
             }
-            else if (game_table.Count <= 7)
+            else if (game_table.Count <= 8)
             {
+                if (is_shedding)
+                    print_shed_table();
+
+                else
+                    print_game_table();
+
                 print_game_table();
-                Console.Write("\n\n");
+                Console.Write("\n\n\n\n");
             }
             else
             {
+                if (is_shedding)
+                    print_shed_table();
+
+                else
+                    print_game_table();
+
                 print_game_table();
-                Console.Write("\n");
+                Console.Write("\n\n\n");
             }
 
-            Console.Write("\nTS - '" + trump_suit.ToString() + "'" +
-                         $"\ncards left - {koloda.Count}\n" +
-                         (player.is_playing ? "| ATTACK! |\n\n\n" : "| DEFEND! |\n\n\n"));
+            UserInterface.set_and_print($"TS -- '{trump_suit}'");
+            Console.Write("\n");
+            UserInterface.set_and_print($"cards left - {koloda.Count}");
+            Console.Write("\n");
+            UserInterface.set_and_print(player.is_playing ? "| ATTACK! |" : "| DEFEND! |");
 
-            Console.Write("\nYOU:" + (player.is_playing ? " (attacking)\n" : " (defending)\n") +
-                         $"\"{player.name}\" [cards:: ({player.koloda.Count})]\n\n");
+            Console.Write("\n\n\n");
+
+            UserInterface.set_and_print($"YOU:" + (player.is_playing ? " (attacking)" : " (defending)"));
+            UserInterface.set_and_print($"\"{player.name}\" [cards:: ({player.koloda.Count})]\n");
+
+            Console.Write("\n");
 
             player.print_cards();
         }
@@ -173,9 +218,13 @@ namespace Durak
         private void ConsoleUpdate(string message, int ms = 1500)
         {
             Console.Clear();
-            Console.WriteLine(message + "\n");
-            print_info();
+
+            UserInterface.set_and_print(message);
             Console.Write("\n");
+
+            print_info(false);
+            Console.Write("\n");
+
             Thread.Sleep(ms);
         }
 
@@ -261,20 +310,25 @@ namespace Durak
                                 return;
                             }
 
-
                             continue;
                         }
                         else
                         {
                             moves_it = 0;
 
-                            ConsoleUpdate("~~~~~~~[OPPONENT TAKES CARDS]~~~~~~~", 2500);
-
                             foreach (var card in game_table)
                                 bb.koloda.Add(card);
 
-                            player.additional_attack(game_table, print_info);
+                            int add;
 
+                            while (((add = player.additional_attack(game_table, print_info)) != -1)
+                                  && ((game_table.Count <= 12 && !first_rebound) || (game_table.Count <= 10 && first_rebound))) 
+                            {
+                                game_table.Add(player.koloda[add]);
+                                player.koloda.RemoveAt(add);
+                            }
+
+                            ConsoleUpdate("~~~~~~~[END OF THE ATTACK]~~~~~~~", 2500);
                             game_table.Clear();
                             give_cards_plpr();
                             sort_cards();
