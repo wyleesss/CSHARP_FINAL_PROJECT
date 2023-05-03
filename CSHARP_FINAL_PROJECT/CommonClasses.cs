@@ -1,22 +1,81 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
-
+#pragma warning disable SYSLIB0011
 static class SerialDB
 {
     static BinaryFormatter formatter = new();
 
     internal static bool check(string login, string password)
     {
+        List<User> users = new List<User>();
+        try
+        {
+            using (Stream fStream = File.OpenRead("..\\..\\..\\DB.bin"))
+            {
+                users = (List<User>)formatter.Deserialize(fStream);
+            }
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine(ex);
+        }
+        foreach (User i in users)
+        {
+            if (i.login == login && i.password == password)
+            {
+                return true;
+            }
+        }
+        Console.WriteLine("Wrong data");
         return false;
     }
 
     internal static void push(User user)
     {
+        List<User> users = new List<User>();
+        try
+        {
+            using (Stream fStream = File.OpenRead("..\\..\\..\\DB.bin"))
+            {
+                users = (List<User>)formatter.Deserialize(fStream);
+            }
 
+            users.Add(new User(user.user_name, user.login, user.password, user.durak_b, user.black_jack_b, user.golden_cards, new(), new()));
+
+            using (var st = new FileStream("..\\..\\..\\DB.bin", FileMode.Create, FileAccess.Write) )
+            {
+                formatter.Serialize(st, users);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
 
     internal static User take(string login, string password)
     {
-        return new User("user_name", login, password, 12, 12, 12, new(), new());
+        List <User> users = new List<User>();
+        try
+        {
+            using (Stream fStream = File.OpenRead("..\\..\\..\\DB.bin"))
+            {
+                users = (List<User>)formatter.Deserialize(fStream);
+            }
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+        foreach (User i in users)
+        {
+            if (i.login == login && i.password == password)
+            {
+                return new User(i.user_name, i.login, i.password, i.durak_b, i.black_jack_b, i.golden_cards, new(), new());
+            }
+        }
+        throw new Exception("Wrong data");
     }
 }
 
