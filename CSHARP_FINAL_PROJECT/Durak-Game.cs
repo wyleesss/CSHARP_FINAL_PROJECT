@@ -1,9 +1,4 @@
-﻿// надати боту можливість докинути карти
-// рефакторинг
-// гру на ставки, ачівки, абілки, рейтинг
-// меню з налаштуваннями
-
-namespace Durak
+﻿namespace Durak
 {
     delegate void print_info(bool expression);
 
@@ -19,17 +14,16 @@ namespace Durak
 
         public Game(int min_card, Player player, BOTIK_BATON bb)
         {
+            Random random = new();
             this.player = player;
             this.bb = bb;
 
             koloda = Card.Schuffle(min_card);
             koloda = Card.Mix(koloda);
-            trump_suit = koloda[koloda.Count - 1].suit;
+            trump_suit = koloda[random.Next(0, koloda.Count)].suit;
 
             bb.koz = trump_suit;
             player.koz = trump_suit;
-
-            Random random = new();
 
             if (random.Next(1, 100) % 2 == 0)
             {
@@ -117,15 +111,15 @@ namespace Durak
             {
                 if ((i + 1) % 2 == 0)
                 {
-                    fullLines[fullLines.Count - 1] += $" ×<- {{{game_table[i], -3}}}";
+                    fullLines[fullLines.Count - 1] += $" ×<- {{{game_table[i],-3}}}";
                 }
                 else if (i != 0 && i != 4 && i != 8)
                 {
-                    fullLines[fullLines.Count - 1] += $"   {{{game_table[i], -3}}}";
+                    fullLines[fullLines.Count - 1] += $"   {{{game_table[i],-3}}}";
                 }
                 else
                 {
-                    fullLines.Add($"{{{game_table[i], -3}}}");
+                    fullLines.Add($"{{{game_table[i],-3}}}");
                 }
             }
 
@@ -141,7 +135,7 @@ namespace Durak
             {
                 if ((i + 1) % 2 == 0)
                 {
-                    fullLines[fullLines.Count - 1] += $"     {{{game_table[i],-3}}}";
+                    fullLines[fullLines.Count - 1] += $"   {{{game_table[i],-3}}}";
                 }
                 else if (i != 0 && i != 4 && i != 8)
                 {
@@ -315,9 +309,21 @@ namespace Durak
                             moves_it = 0;
 
                             int add;
+                            int counter = 0;
 
                             while ((first_rebound && game_table.Count <= 10) || (!first_rebound && game_table.Count <= 12))
                             {
+                                if (first_rebound)
+                                {
+                                    if (counter == 5)
+                                        break;
+                                }
+                                else
+                                {
+                                    if (counter == 6)
+                                        break;
+                                }
+
                                 add = player.additional_attack(game_table, print_info);
 
                                 if (add == -1)
@@ -325,6 +331,8 @@ namespace Durak
 
                                 game_table.Add(player.koloda[add]);
                                 player.koloda.RemoveAt(add);
+
+                                counter++;
                             }
 
                             foreach (var card in game_table)
@@ -431,9 +439,40 @@ namespace Durak
                         }
                         else
                         {
-                            ConsoleUpdate("~~~~~~~[YOU TAKE THE CARDS]~~~~~~~", 2500);
+                            int add;
+                            int counter = 0;
+
+                            ConsoleUpdate("~~~~~~~[YOU TAKE THE CARDS]~~~~~~~", 1500, true);
+
+                            while ((first_rebound && game_table.Count <= 10) || (!first_rebound && game_table.Count <= 12))
+                            {
+                                if (first_rebound)
+                                {
+                                    if (counter == 5)
+                                        break;
+                                }
+                                else
+                                {
+                                    if (counter == 6)
+                                        break;
+                                }
+
+                                add = bb.additional_attack(game_table);
+
+                                if (add == -1)
+                                    break;
+
+                                ConsoleUpdate("~~~~~~~[YOU TAKE THE CARDS]~~~~~~~", 1000, true);
+
+                                game_table.Add(bb.koloda[add]);
+                                bb.koloda.RemoveAt(add);
+
+                                counter++;
+                            }
 
                             moves_it = 0;
+
+                            ConsoleUpdate("~~~~~~~[END OF THE ATTACK]~~~~~~~", 2500, true);
 
                             foreach (var card in game_table)
                                 player.koloda.Add(card);

@@ -127,6 +127,17 @@ static class UserInterface
         set_and_print(new[] { text1, text2, text3, text4, text5 });
     }
 
+    internal static void print_info_logo()
+    {
+        string text1 = "  ___   _   _   _____    ___    ____    __  __      _      _____   ___    ___    _   _ ";
+        string text2 = " |_ _| | \\ | | |  ___|  / _ \\  |  _ \\  |  \\/  |    / \\    |_   _| |_ _|  / _ \\  | \\ | |";
+        string text3 = "  | |  |  \\| | | |_    | | | | | |_) | | |\\/| |   / _ \\     | |    | |  | | | | |  \\| |";
+        string text4 = "  | |  | |\\  | |  _|   | |_| | |  _ <  | |  | |  / ___ \\    | |    | |  | |_| | | |\\  |";
+        string text5 = " |___| |_| \\_| |_|      \\___/  |_| \\_\\ |_|  |_| /_/   \\_\\   |_|   |___|  \\___/  |_| \\_|";
+
+        set_and_print(new[] { text1, text2, text3, text4, text5 });
+    }
+
     internal static void print_about_us()
     {
         string text1 = "     _      _                       _       _   _       ";
@@ -177,6 +188,9 @@ static class UserInterface
         SimpleConsoleMenu otherg = new SimpleConsoleMenu("Choose an option:", options_2);
 
         SimpleConsoleMenu about = new SimpleConsoleMenu("                ", "Exit ");
+
+        IEnumerable<string> info_op = new List<string>() { "Durak   ", "BlackJack", "Memory  ", "Exit    " };
+        SimpleConsoleMenu info = new SimpleConsoleMenu("Choose an option:", info_op);
 
         while (true)
         {
@@ -278,7 +292,7 @@ static class UserInterface
                                 loading();
                                 Black_Jack bj = new();
                                 bj.BJ_init();
-                                Console.ReadKey();
+                                Console.ReadKey();  
                                 break;
                             case 1:
                                 run = false;
@@ -306,7 +320,7 @@ static class UserInterface
                                 Console.WriteLine("\n\n\n");
                                 loading();
                                 MM.Memory m = new();
-                                m.go();
+                                m.game();
                                 break;
                             case 1:
                                 run = false;
@@ -315,6 +329,7 @@ static class UserInterface
                         }
                     }
                     break;
+
 
                 case 4:
                     while (run)
@@ -343,6 +358,71 @@ static class UserInterface
                         switch(about.SelectedIndex) 
                         {
                             case 0:
+                                run = false;
+                                Console.Clear();
+                                break;
+                        }
+                    }
+                    break;
+                case 3:
+                    while (run)
+                    {
+                        Console.Clear();
+                        Console.WriteLine();
+                        print_info_logo();
+                        Console.WriteLine("\n\n\n\n\n\n");
+                        info.Show();
+                        switch(info.SelectedIndex) 
+                        {
+                            case 0:
+                                Console.Clear();
+                                Console.WriteLine("\n\n\n\n\n\n");
+                                set_and_print("“Durak” is a card game whose goal is to get rid of all of its cards by staying the opponent`s cards higher.       ");
+
+                                set_and_print("The rules of the game in the \"fool\" are quite simple.                                                             ");
+                                set_and_print("Each player gets 6 cards, the remaining cards remain in the pile.                                                  ");
+                                set_and_print("The peculiarity of the game is that the kozir (suit, which in this game has the most of all colors)                ");
+                                set_and_print("changes in each round.                                                                                             ");
+                                set_and_print("Each player turns, throwing cards on the table, on which the other player should put                               ");
+                                set_and_print("a card higher than the same suit, or a Trump card of any suit, if the table already has a Trump card.              ");
+                                set_and_print("If the player cannot stay the card, he must remove all cards from the table and add them to his own.               ");
+                                set_and_print("In a Durak , the right and left arrows are also used to move, the up arrow is used to select an action,            ");
+                                set_and_print("the down arrow is used to end the move, finish adding cards, or if it is impossible to beat (to pick up cards).    ");
+                                Console.ReadKey();
+                                break;
+                            case 1: 
+                                Console.Clear();
+                                Console.WriteLine("\n\n\n\n\n\n");
+                                set_and_print("\"Blackjack\" is a gamble where the player is competing against the dealer.                                        ");
+                                set_and_print("The game is to score more points than the dealer, not exceeding 21.                                              ");
+                                set_and_print("Each player gets two cards first, and the dealer gets one card.  Each card has its rank and points.              ");
+                                set_and_print("Cards with numbers have a rank from 2 to 10, the face (including king, dama and valeta) have a rank of 10.       ");
+                                set_and_print("the ACE can have a rank of 1 or 11, depending on what is more advantageous for the player.                       ");
+                                set_and_print("The player can pick up additional cards (\"draw\") until the sum of points does not exceed 21                      ");
+                                set_and_print("or decide that they have already scored enough points.                                                           ");
+                                set_and_print("If the player's score exceeds 21, it will automatically lose (\"over - taken\").                                   ");
+                                set_and_print("After all the players have decided that he is ready, the dealer adds the cards.                                  ");
+                                set_and_print("If the dealer's points amount is less than 17, he must take another card,                                        ");
+                                set_and_print("and if the sum of points 17 or more, the dealer stops.                                                           ");
+                                set_and_print("The player wins if his points are more than the dealer, not exceeding 21.                                        ");
+                                set_and_print("If the score of players and dealer is the same, the game is considered a night.                                  ");
+                                Console.ReadKey();
+                                break;
+
+                            case 2:
+                                Console.Clear();
+                                Console.WriteLine("\n\n\n\n\n\n");
+                                set_and_print("\"Memory\" is a game where players can test their memory by trying to find a pair of cards.                        ");
+                                set_and_print("The goal of the game is to open 16 pairs of cards.                                                               ");
+                                set_and_print("The cards are facing up and need to be wrapped to find a pair.                                                   ");
+                                set_and_print("If the cards you turn do not match, they will turn upside down.                                                  ");
+                                set_and_print("and the player should continue to search for a pair.                                                             ");
+                                set_and_print("The game ends when the player finds all the pairs of pictures.                                                   ");
+                                set_and_print("After the game is over, the player gets a final score, which depends on the number of moves made by the player.  ");
+                                set_and_print("To select a card, you need to enter the number of its trunk, then the line number through the comma.             ");
+                                Console.ReadKey();
+                                break;
+                            case 3:
                                 run = false;
                                 Console.Clear();
                                 break;
@@ -404,16 +484,18 @@ static class UserInterface
                             Console.Clear();
                             Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n");
                             set_and_print("INCORRECT LOGIN/PASSWORD");
-
+                            //input_login = string.Empty;
+                            //input_password = string.Empty;
                             Thread.Sleep(2000);
+                            Console.Clear();
                         }
                         else
                         {
                             Console.Clear();
                             Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n");
                             set_and_print("SING IN CONFIRMED");
-
                             Thread.Sleep(2000);
+                            Console.Clear();
                             return SerialDB.take(input_login, input_password);
                         }
                     }
@@ -455,7 +537,7 @@ static class UserInterface
 
                     Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n");
                     set_and_print("SIGN UP CONFIRMED");
-
+                    Console.Clear();
                     Thread.Sleep(2000);
 
                     User user = new(input_user_name, input_login, input_password, 0, 0, 5, new(), new());

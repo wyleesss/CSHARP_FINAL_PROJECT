@@ -24,28 +24,54 @@
         {
             if (check_cards(att))
             {
-                for (int i = 0; i < koloda.Count; i++)
+                if (game_koloda_count < 6) 
                 {
-                    if (game_koloda_count <= 10) 
+                    //Бити при кінці козирем таку саму карту як вона за числом
+                    for (int i = 0; i < koloda.Count; i++)
                     {
-                        for (int j = 0; j < koloda.Count; j++) 
-                        {
-                            if (att.suit == koz) return -1;
-                            if (koloda[i].suit == att.suit && koloda[i].number > att.number) return i;
-                        }
-                        return -1;
+                        if (att.number == koloda[i].number && koloda[i].suit == koz) return i;
                     }
-                    if (game_table_count >= 3)
+                    //Якщо не знайшли то шукає просто чим можна відбити
+                    for (int i = 0; i < koloda.Count; i++)
                     {
-                        for (int j = 0; j < koloda.Count; j++)
-                        {
-                            if (koloda[j].suit == koz && att.suit != koz && koloda[j].number == att.number)
-                                return j;
-                        }
+                        if (att.suit == koloda[i].suit && koloda[i].number > att.number) return i;
                     }
 
-                    if (koloda[i].suit == att.suit && koloda[i].number > att.number) return i;
-                    else if ((koloda[i].suit == koz && game_koloda_count <= 6) || (koloda[i].suit == koz && (take_count + 1) % 2 == 0)) return i;
+                    for (int i = 0; i < koloda.Count; i++)
+                    {
+                        if (koloda[i].suit == koz && koloda[i].number > att.number) return i;
+                    }
+                }
+
+                //Якщо карта козирь і ми не брали два рази і якщо в оклоді достатнь карт ми беремо козирь
+                if (att.suit == koz && take_count % 2 != 0 && game_koloda_count > 6) return -1;
+                else
+                {
+                    //Шукаємо просто чим відбити
+                    //Для оптимізації застосовуємо розгалуження
+                    if (att.suit == koz)
+                    {
+                        //Шукаємо козирь зразу ж
+                        for (int i = 0; i < koloda.Count; i++)
+                        {
+                            if (att.suit == koloda[i].suit && koloda[i].number > att.number) return i;
+                        }
+                    }
+                    else
+                    {
+                        //Шукаємо просту карту
+                        for (int i = 0; i < koloda.Count; i++)
+                        {
+                            if (att.suit == koloda[i].suit && koloda[i].number > att.number) return i;
+                        }
+                        //Якщо побити можемо тільки козерем то ми забираємо якщо ще багато карт у колоді
+                        if (game_koloda_count >= 12 || game_table_count < 4) return -1;
+                        //Якщо не знаходимо то шукаємо козирь
+                        for (int i = 0; i < koloda.Count; i++)
+                        {
+                            if (koloda[i].suit == koz && koloda[i].number > att.number) return i;
+                        }
+                    }
                 }
             }
 
@@ -53,6 +79,54 @@
             return -1;
         }
 
+        public int additional_attack(List<Card> game_table)
+        {
+            bool only_koz = true;
+
+            foreach (Card card in koloda)
+            {
+                if (card.suit != koz)
+                {
+                    only_koz = false;
+                    break;
+                }
+            }
+
+            if (only_koz)
+                return -1;
+
+            for (int i = 0; i < game_table.Count(); i++)
+            {
+                for (int j = 0; j < koloda.Count(); j++)
+                {
+                    if (game_table[i].number == koloda[j].number
+                        && koloda[j].suit != koz)
+                        return j;
+                }
+            }
+
+            return -1;
+        }
+        int find_min_card_index()
+        {
+            int min_number = int.MaxValue;
+            int index = 0;
+
+            for (int i = 0; i < koloda.Count; i++)
+            {
+                if (koloda[i].number < min_number)
+                {
+                    min_number = koloda[i].number;
+                    index = i;
+                }
+            }
+
+            return index;
+        }
+
+        //static List<int> find_same_cards_indices()
+        //{
+        //}
         public int attack(List<Card> game_table, int game_koloda_count)
         {
             bool only_koz = true;
@@ -68,24 +142,7 @@
 
             if (game_table.Count == 0)
             {
-                Random r = new();
-
-                if (!only_koz)
-                {
-                    int random_index;
-
-                    do
-                    {
-                        random_index = r.Next(0, koloda.Count());
-                    } 
-                    while (koloda[random_index].suit == koz);
-
-                    return random_index;
-                }
-                else
-                {
-                    return r.Next(0, koloda.Count());
-                }
+                return find_min_card_index();
             }
             else if (game_table.Count <= 12)
             {

@@ -131,7 +131,7 @@
                 ConsoleKeyInfo keyInfo = Console.ReadKey();
                 switch (keyInfo.Key)
                 {
-                    case ConsoleKey.Enter:
+                    case ConsoleKey.UpArrow:
                         if (selectedCardIndex == 0)
                         {
                             p.hand.Add(deck[0]);
