@@ -31,12 +31,22 @@
             int firstcolumn = -6, firstrow = -6, secondcolumn = -6, secondrow = -6;
             string str = "";
             string[] arr;
+            string text = "";
+            int width = Console.WindowWidth;
+            int left = 0;
 
             while (firstcolumn >= 4 || firstrow >= 8 || firstcolumn < 0 || firstrow < 0)
             {
                 // firstcolumn = -6; firstrow = -6; secondcolumn = -6; secondrow = -6;
-                Console.WriteLine("Enter the position of the first card:");
+                text = "Enter the position of the first card:";
+                left = (width / 2) - (text.Length / 2);
+                Console.SetCursorPosition(left, Console.CursorTop);
+                Console.WriteLine(text);
+                left = (width / 2) - (4 / 2);
+                Console.SetCursorPosition(left, Console.CursorTop);
+                Console.Write("");
                 str = new string(Console.ReadLine());
+                //UserInterface.processed_input(ref str);
                 arr = str.Split(',', '.', ' ');
                 try
                 {
@@ -45,31 +55,60 @@
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message); 
+                    text = ex.Message;
+                    left = (width / 2) - (text.Length / 2);
+                    Console.SetCursorPosition(left, Console.CursorTop);
+                    Console.WriteLine(text);
+                    //Console.WriteLine(ex.Message);
                 }
-                    if (firstcolumn >= 4 || firstrow >= 8 || firstcolumn < 0 || firstrow < 0)
-                        Console.WriteLine("You have entered an invalid number!");
-                }
-                while (secondcolumn >= 5 || secondrow >= 8 || secondcolumn < 0 || secondrow < 0 || (secondcolumn==firstcolumn && firstrow==secondrow))
+                if (firstcolumn >= 4 || firstrow >= 8 || firstcolumn < 0 || firstrow < 0)
                 {
-                    Console.WriteLine("Enter the position of the second card:");
-                    str = new string(Console.ReadLine());
-                    arr = str.Split(',');
-                try 
+                    text = "You have entered an invalid number!";
+                    left = (width / 2) - (text.Length / 2);
+                    Console.SetCursorPosition(left, Console.CursorTop);
+                    Console.WriteLine(text);
+                }
+            }
+            while (secondcolumn >= 5 || secondrow >= 8 || secondcolumn < 0 || secondrow < 0 || (secondcolumn == firstcolumn && firstrow == secondrow))
+            {
+                text = "Enter the position of the second card:";
+                left = (width / 2) - (text.Length / 2);
+                Console.SetCursorPosition(left, Console.CursorTop);
+                Console.WriteLine(text);
+                left = (width / 2) - (4 / 2);
+                Console.SetCursorPosition(left, Console.CursorTop);
+                Console.Write("");
+                str = new string(Console.ReadLine());
+                arr = str.Split(',');
+                try
                 {
                     secondcolumn = int.Parse(arr[0]) - 1;
                     secondrow = int.Parse(arr[1]) - 1;
-                }   
+                }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    text = ex.Message;
+                    left = (width / 2) - (text.Length / 2);
+                    Console.SetCursorPosition(left, Console.CursorTop);
+                    Console.WriteLine(text);
                 }
                 if (secondcolumn >= 5 || secondrow >= 8 || secondcolumn < 0 || secondrow < 0)
-                        Console.WriteLine("You have entered an invalid number!");
-                    if(secondcolumn == firstcolumn && firstrow == secondrow)
-                    Console.WriteLine("You entered the same number as the first card!");
+                {
+                    text = "You have entered an invalid number!";
+                    left = (width / 2) - (text.Length / 2);
+                    Console.SetCursorPosition(left, Console.CursorTop);
+                    Console.WriteLine(text);
+                }
+                if (secondcolumn == firstcolumn && firstrow == secondrow)
+                {
+                    text = "You entered the same number as the first card!";
+                    left = (width / 2) - (text.Length / 2);
+                    Console.SetCursorPosition(left, Console.CursorTop);
+                    Console.WriteLine(text);
+
+                }
             }
-            
+
             //Console.WriteLine(Convert.ToString(board[firstcolumn, firstrow].number), Convert.ToString(board[firstcolumn, firstrow].suit), Convert.ToString( board[secondcolumn, secondrow].suit), Convert.ToString(board[secondcolumn, secondrow].suit));
             if (checking(firstcolumn, firstrow, secondcolumn, secondrow))
             {
@@ -80,11 +119,16 @@
             }
             else
             {
-                Console.Write("First card:");
-                board[firstcolumn, firstrow].print();
+                text = "First card:" + board[firstcolumn, firstrow];
+                //board[firstcolumn, firstrow].print();
+                left = (width / 2) - (text.Length / 2);
+                Console.SetCursorPosition(left, Console.CursorTop);
+                Console.Write(text);
                 Console.WriteLine();
-                Console.Write("Second card:");
-                board[secondcolumn, secondrow].print();
+                text = "Second card:" + board[secondcolumn, secondrow];
+                left = (width / 2) - (text.Length / 2);
+                Console.SetCursorPosition(left, Console.CursorTop);
+                Console.Write(text);
                 Console.WriteLine();
                 player.progress++;
                 Console.ReadKey();
@@ -100,44 +144,86 @@
         }
         void printBoard(Card[,] list)
         {
+            int width = Console.WindowWidth;
+            string text = "";
+            //int left = (width / 2) - (5 / 2);
             for (int i = 1; i <= 4; i++)
-                Console.Write("\t"+Convert.ToString(i));
+            {
+                text = text + "     " + Convert.ToString(i);
+            }
 
             //Console.WriteLine(5);
+            string[] stringOfText = { "", "", "", "", "", "", "", "" };
             for (int i = 0; i < 8; i++)
             {
-                Console.WriteLine();
-                Console.Write($"{i + 1}"+"\t");
+                //left = (width / 2) - (5 / 2);
+                stringOfText[i] = stringOfText[i] + Convert.ToString(i + 1) + "    ";
+                //Console.WriteLine();
+                //Console.SetCursorPosition(left, Console.CursorTop);
+                // Console.Write($"{i + 1}"+"\t");
                 for (int j = 0; j < 4; j++)
                 {
+                    //left = (width / 2) - (4 / 2);
                     if (list[j, i] != null)
-                        list[j, i].print();
+                    {
+                        stringOfText[i] = stringOfText[i] + Convert.ToString(list[j, i]);
+                    }
+
                     else
-                        Console.Write("##");
-                    Console.Write("\t");
+                    {
+                        stringOfText[i] = stringOfText[i] + "##";
+                        //Console.Write("##");
+                    }
+
+                    if (j + 1 < 4)
+                    { stringOfText[i] = stringOfText[i] + "    "; }
+
                 }
-                
+            }
+            int left = (width / 2) - (stringOfText[2].Length / 2);
+            //Console.WriteLine(text);
+            Console.SetCursorPosition(left, Console.CursorTop);
+            Console.Write(text);
+            for (int i = 0; i < stringOfText.Length; i++)
+            {
+                Console.WriteLine();
+                left = (width / 2) - (stringOfText[i].Length / 2);
+                Console.SetCursorPosition(left, Console.CursorTop);
+                Console.Write(stringOfText[i]);
             }
             Console.WriteLine();
-        }
-        public void game()
-{
 
-    while (player.score < 16)
-    {
+        }
+
+        public void game()
+        {
+            string text = "";
+            int width = Console.WindowWidth;
+            int left = 0;
+            while (player.score < 16)
+            {
                 Console.Clear();
                 printBoard(tempboard);
-        Console.WriteLine("score: " + player.score);
-        Console.WriteLine("moves: " + player.progress);
-         printBoard(board);
-        go();
+                text = "score: " + player.score;
+                left = (width / 2) - (text.Length / 2);
+                Console.SetCursorPosition(left, Console.CursorTop);
+                Console.WriteLine(text);
+                text = "moves: " + player.progress;
+                left = (width / 2) - (text.Length / 2);
+                Console.SetCursorPosition(left, Console.CursorTop);
+                Console.WriteLine(text);
+                //printBoard(board);
+                go();
 
-    }
+            }
+            Console.Clear();
             printBoard(tempboard);
-            Console.WriteLine($"Congratulations! You won with the number of moves: {player.progress}") ;
-  
+            text = "Congratulations! You won with the number of moves: " + player.progress;
+            left = (width / 2) - (text.Length / 2);
+            Console.SetCursorPosition(left, Console.CursorTop);
+            Console.WriteLine(text);
+            Console.ReadKey();
 
-
-}
+        }
     }
 }

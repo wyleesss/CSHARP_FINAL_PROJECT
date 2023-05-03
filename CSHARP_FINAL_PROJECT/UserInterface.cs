@@ -210,7 +210,7 @@ static class UserInterface
 
                                 game = new(9, new(us.user_name, new()), new());
                                 game.Start();
-
+                                Console.ReadKey();
                                 break;
                             case 1:
                                 Console.Clear();
@@ -222,7 +222,7 @@ static class UserInterface
 
                                 game = new(7, new(us.user_name, new()), new());
                                 game.Start();
-
+                                Console.ReadKey();
                                 break;
                             case 2:
                                 Console.Clear();
@@ -234,6 +234,8 @@ static class UserInterface
 
                                 game = new(6, new(us.user_name, new()), new());
                                 game.Start();
+
+                                Console.ReadKey();
 
                                 break;
 
@@ -247,7 +249,7 @@ static class UserInterface
 
                                 game = new(2, new(us.user_name, new()), new());
                                 game.Start();
-
+                                Console.ReadKey();
                                 break;
                             case 4:
                                 run = false;
@@ -276,6 +278,7 @@ static class UserInterface
                                 loading();
                                 Black_Jack bj = new();
                                 bj.BJ_init();
+                                Console.ReadKey();
                                 break;
                             case 1:
                                 run = false;
