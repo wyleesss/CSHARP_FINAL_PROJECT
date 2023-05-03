@@ -166,7 +166,7 @@ static class UserInterface
 
     internal static void main_menu(User us) 
     {
-        IEnumerable<string> options = new List<string>() { "Durak   ", "BlackJack", "Memory  ","How use ","About us","Exit    " };
+        IEnumerable<string> options = new List<string>() { "Durak   ", "BlackJack", "Memory  ", "Info    ", "About us","Exit    " };
         SimpleConsoleMenu menu = new SimpleConsoleMenu("Choose an option:", options);
 
 
@@ -324,7 +324,7 @@ static class UserInterface
                         set_and_print("Programers:");
                         set_and_print("Prosto_Alex : 5375411417903080");
                         set_and_print("Tanyok : 4149499159434339     ");
-                        set_and_print("4elovelll : -                 ");
+                        set_and_print("4elovel : -                   ");
                         set_and_print("wyleesss : -                  ");
                         Console.WriteLine();
                         set_and_print("Story:");

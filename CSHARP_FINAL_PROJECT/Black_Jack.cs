@@ -2,6 +2,7 @@
 {
     class Black_Jack
     {
+        int selectedCardIndex = 0;
         bool leaver_d = false, leaver_p = false;
         public static List<Card> deck = new List<Card>();
         public Player p { get; set; } = new Player();
@@ -22,7 +23,7 @@
             {
                 if (card.number > 9)
                 {
-                    if(card.number !=14)
+                    if (card.number != 14)
                     {
                         d.score += 10;
                     }
@@ -39,10 +40,11 @@
                     d.score2 = d.score;
                     d.score += 1;
                     d.score2 += 11;
-                    leaver_d=true;
+                    leaver_d = true;
                 }
             }
-            buf="";
+            buf = "";
+            Console.Write("\n\n\n\n\n\n");
             UserInterface.set_and_print("[]DEALER[]");
             foreach (Card card in d.hand)
             {
@@ -53,7 +55,8 @@
             }
             buf += "(";
             buf += d.score;
-            if (d.score2 > 0 && d.score2 < 22) {
+            if (d.score2 > 0 && d.score2 < 22)
+            {
                 buf += "/";
                 buf += d.score2;
             }
@@ -61,11 +64,11 @@
             UserInterface.set_and_print(buf);
             UserInterface.set_and_print("*************");
             UserInterface.set_and_print("*             *");
-          UserInterface.set_and_print("*               *");
-         UserInterface.set_and_print("*                 *");
-         UserInterface.set_and_print("*                 *");
-          UserInterface.set_and_print("*               *");
-           UserInterface.set_and_print("*             *");
+            UserInterface.set_and_print("*               *");
+            UserInterface.set_and_print("*                 *");
+            UserInterface.set_and_print("*                 *");
+            UserInterface.set_and_print("*               *");
+            UserInterface.set_and_print("*             *");
             UserInterface.set_and_print("*************");
             foreach (Card card in p.hand)
             {
@@ -124,43 +127,65 @@
             {
                 Console.Clear();
                 print_menu();
-                Console.WriteLine("Write your choice:");
-                p.menu();
-                int choice = Convert.ToInt32(Console.ReadLine());
-                switch (choice)
+                p.menu(selectedCardIndex);
+                ConsoleKeyInfo keyInfo = Console.ReadKey();
+                switch (keyInfo.Key)
                 {
-                    case 1:
-                        p.hand.Add(deck[0]);
-                        deck.Remove(deck[0]);
-                        Console.Clear();
-                        print_menu();
-                        if (p.score > 21)
+                    case ConsoleKey.Enter:
+                        if (selectedCardIndex == 0)
                         {
-                            Console.WriteLine("YOU LOSE");
+                            p.hand.Add(deck[0]);
+                            deck.Remove(deck[0]);
+                            Console.Clear();
+                            print_menu();
+                            if (p.score > 21)
+                            {
+                                Console.WriteLine("YOU LOSE");
+                                return;
+                            }
+                        }
+                        else if (selectedCardIndex == 1)
+                        {
+                            Dealer_draw();
+                            Check();
                             return;
+                        }
+                        else if (selectedCardIndex == 2)
+                        {
+                            //user.black_jack_b-=bid;
+                            //bid*=2;
+                            //p.hand.Add(deck[0]);
+                            deck.Remove(deck[0]);
+                            Console.Clear();
+                            print_menu();
+                            if (p.score > 21)
+                            {
+                                Console.WriteLine("YOU LOSE");
+                                return;
+                            }
                         }
                         break;
-                    case 2:
-                        Dealer_draw();
-                        Check();
-                        return;
-                    case 3:
-                        //user.black_jack_b-=bid;
-                        //bid*=2;
-                        p.hand.Add(deck[0]);
-                        deck.Remove(deck[0]);
-                        Console.Clear();
-                        print_menu();
-                        if (p.score > 21)
-                        {
-                            Console.WriteLine("YOU LOSE");
-                            return;
-                        }
+
+                    case ConsoleKey.RightArrow:
+
+                        if (selectedCardIndex < 2)
+                            selectedCardIndex++;
+
+                        else
+                            selectedCardIndex = 0;
+                        break;
+                    case ConsoleKey.LeftArrow:
+
+                        if (selectedCardIndex > 0)
+                            selectedCardIndex--;
+
+                        else
+                            selectedCardIndex = 2;
                         break;
                 }
             }
-
         }
+
         public void Dealer_draw()
         {
             while (d.score < p.score && d.score < 17)
@@ -175,7 +200,7 @@
         {
             int biggest_p = p.score;
             int biggest_d = d.score;
-            if (p.score2 != 0  && p.score2 < 22)
+            if (p.score2 != 0 && p.score2 < 22)
             {
                 biggest_p = p.score2;
             }
@@ -200,7 +225,8 @@
             {
                 Console.WriteLine("YOU WIN");
                 //user.black_jack_b+= bid*2;
-            }else if(biggest_p == biggest_d)
+            }
+            else if (biggest_p == biggest_d)
             {
                 Console.WriteLine("TIE");
                 //user.black_jack_b+= bid;
@@ -213,18 +239,36 @@
         public List<Card> hand = new List<Card>();
         public int score = 0;
         public int score2 = 0;
-        public void menu()
+        public void menu(int selectedCardIndex)
         {
-            Console.WriteLine("1 - draw");
-            Console.WriteLine("2 - stop");
-            Console.WriteLine("3 - double");
+            string buf = "DRAW  STOP  DOUBLE";
+            string mask = "                  ";
+            switch (selectedCardIndex)
+            {
+                case 0:
+                    mask = "^^^^";
+                    mask += "              ";
+                    break;
+                case 1:
+                    mask = "      ";
+                    mask += "^^^^";
+                    mask += "        ";
+                    break;
+                case 2:
+                    mask = "            ";
+                    mask += "^^^^^^";
+                    break;
+            }
+            Console.WriteLine();
+            UserInterface.set_and_print(buf);
+            UserInterface.set_and_print(mask);
         }
         public int bid()
         {
             //Console.WriteLine("Write your bet");
             //bid = Console.ReadLine();
             //user.black_jack_b-=bid;
-            return 0; 
+            return 0;
         }
     }
 
