@@ -26,6 +26,15 @@
             {
                 for (int i = 0; i < koloda.Count; i++)
                 {
+                    if (game_koloda_count <= 10) 
+                    {
+                        for (int j = 0; j < koloda.Count; j++) 
+                        {
+                            if (att.suit == koz) return -1;
+                            if (koloda[i].suit == att.suit && koloda[i].number > att.number) return i;
+                        }
+                        return -1;
+                    }
                     if (game_table_count >= 3)
                     {
                         for (int j = 0; j < koloda.Count; j++)

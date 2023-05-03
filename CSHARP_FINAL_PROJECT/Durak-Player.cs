@@ -86,7 +86,7 @@
 
                         break;
 
-                    case ConsoleKey.Enter:
+                    case ConsoleKey.UpArrow:
 
                         if (game_table.Count == 0)
                             return selectedCardIndex;
@@ -175,7 +175,7 @@
 
                         break;
 
-                    case ConsoleKey.Enter:
+                    case ConsoleKey.UpArrow:
 
                         if (game_table.Count <= 12)
                         {
@@ -256,7 +256,7 @@
 
                         break;
 
-                    case ConsoleKey.Enter:
+                    case ConsoleKey.UpArrow:
 
                         if (koloda[selectedCardIndex].suit == koz && att.suit != koz)
                             return selectedCardIndex;

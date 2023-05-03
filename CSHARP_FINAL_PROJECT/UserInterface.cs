@@ -127,6 +127,17 @@ static class UserInterface
         set_and_print(new[] { text1, text2, text3, text4, text5 });
     }
 
+    internal static void print_about_us()
+    {
+        string text1 = "     _      _                       _       _   _       ";
+        string text2 = "    / \\    | |__     ___    _   _  | |_    | | | |  ___ ";
+        string text3 = "   / _ \\   | '_ \\   / _ \\  | | | | | __|   | | | | / __|";
+        string text4 = "  / ___ \\  | |_) | | (_) | | |_| | | |_    | |_| | \\__ \\";
+        string text5 = " /_/   \\_\\ |_.__/   \\___/   \\__,_|  \\__|    \\___/  |___/";
+
+        set_and_print(new[] { text1, text2, text3, text4, text5 });
+    }
+
     static void print_sign_logo()
     {
         string text1 = "  ____    _                     _                __    ____    _                                   ";
@@ -142,20 +153,20 @@ static class UserInterface
     internal static void loading() 
     {
         string text = "Loading ";
-        set_and_print(text, Console.Write, 10);
+        set_and_print(text, Console.Write, 20);
         string x = "█";
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 18; i++)
         {
             Console.Write(x);
-            if(i < 10) Thread.Sleep(400);
-            if (i >= 10 && i < 20) Thread.Sleep(250);
-            if (i >= 20) Thread.Sleep(75);
+            if(i < 7) Thread.Sleep(400);
+            if (i >= 7 && i < 13) Thread.Sleep(250);
+            if (i >= 13) Thread.Sleep(75);
         }
     }
 
     internal static void main_menu(User us) 
     {
-        IEnumerable<string> options = new List<string>() { "Durak   ", "BlackJack", "Memory  ","How use ","Exit    " };
+        IEnumerable<string> options = new List<string>() { "Durak   ", "BlackJack", "Memory  ","How use ","About us","Exit    " };
         SimpleConsoleMenu menu = new SimpleConsoleMenu("Choose an option:", options);
 
 
@@ -164,6 +175,8 @@ static class UserInterface
 
         IEnumerable<string> options_2 = new List<string>() { "Start", "Exit " };
         SimpleConsoleMenu otherg = new SimpleConsoleMenu("Choose an option:", options_2);
+
+        SimpleConsoleMenu about = new SimpleConsoleMenu("                ", "Exit ");
 
         while (true)
         {
@@ -185,7 +198,7 @@ static class UserInterface
 
                         decks.Show();
 
-                        switch (decks.SelectedIndex) 
+                        switch (decks.SelectedIndex)
                         {
                             case 0:
                                 Console.Clear();
@@ -299,7 +312,41 @@ static class UserInterface
                         }
                     }
                     break;
+
                 case 4:
+                    while (run)
+                    {
+                        Console.Clear();
+                        Console.WriteLine();
+                        print_about_us();
+                        Console.WriteLine("\n\n\n");
+
+                        set_and_print("Programers:");
+                        set_and_print("Prosto_Alex : 5375411417903080");
+                        set_and_print("Tanyok : 4149499159434339     ");
+                        set_and_print("4elovelll : -                 ");
+                        set_and_print("wyleesss : -                  ");
+                        Console.WriteLine();
+                        set_and_print("Story:");
+                        set_and_print("Hello everyone, I'm Alex, I'm 16 and this is our little project. I am a leader, and I can say that I am extremely");
+                        set_and_print("glad that I have such a team. I repeatedly convinced myself that these are really the coolest people there are,  ");
+                        set_and_print("sometimes there were thoughts that I was not worthy to be a commander, because my team did such things that you  ");
+                        set_and_print("could not even dream of. What you see in front of you is our little project, into which we have poured our hearts");
+                        set_and_print("all to the last, which is only worth the sleepless nights we gave to create it.                                  ");
+                        set_and_print("Hope you like it and enjoy it, thanks to all. Alex.                                                              ");
+                        Console.WriteLine();
+                        Console.WriteLine();
+                        about.Show();
+                        switch(about.SelectedIndex) 
+                        {
+                            case 0:
+                                run = false;
+                                Console.Clear();
+                                break;
+                        }
+                    }
+                    break;
+                case 5:
                     Console.Clear();
                     Environment.Exit(0);
                     break; 
