@@ -144,7 +144,7 @@
                             print_menu();
                             if (p.score > 21)
                             {
-                                Console.WriteLine("YOU LOSE");
+                                UserInterface.set_and_print("YOU LOSE");
                                 return;
                             }
                         }
@@ -167,7 +167,7 @@
                             print_menu();
                             if (p.score > 21)
                             {
-                                Console.WriteLine("YOU LOSE");
+                                UserInterface.set_and_print("YOU LOSE");
                                 return;
                             }
                         }
@@ -217,25 +217,25 @@
             }
             if (biggest_p > 21)
             {
-                Console.WriteLine("YOU LOSE");
+                UserInterface.set_and_print("YOU LOSE");
             }
             else if (biggest_d > 21)
             {
-                Console.WriteLine("YOU WIN");
+                UserInterface.set_and_print("YOU WIN");
                 user.black_jack_b+= bid*2;
             }
             else if (biggest_d > biggest_p)
             {
-                Console.WriteLine("YOU LOSE");
+                UserInterface.set_and_print("YOU LOSE");
             }
             else if (biggest_p > biggest_d)
             {
-                Console.WriteLine("YOU WIN");
+                UserInterface.set_and_print("YOU WIN");
                 user.black_jack_b+= bid*2;
             }
             else if (biggest_p == biggest_d)
             {
-                Console.WriteLine("TIE");
+                UserInterface.set_and_print("TIE");
                 user.black_jack_b+= bid;
             }
         }
@@ -298,7 +298,8 @@
                 catch (Exception)
                 {
 
-                    UserInterface.set_and_print("Wrong bet");
+                    UserInterface.set_and_print("WRONG BET");
+                    Thread.Sleep(1000);
                 }
             }
             return bidd;
