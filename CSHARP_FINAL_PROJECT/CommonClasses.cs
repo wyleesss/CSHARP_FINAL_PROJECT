@@ -30,6 +30,41 @@ static class SerialDB
         return false;
     }
 
+
+
+
+    internal static bool reg_check(string login)
+    {
+        List<User> users = new List<User>();
+        try
+        {
+            using (Stream fStream = File.OpenRead("..\\..\\..\\DB.bin"))
+            {
+                users = (List<User>)formatter.Deserialize(fStream);
+            }
+        }
+        catch (Exception ex)
+        {
+
+            Console.WriteLine(ex);
+        }
+        foreach (User i in users)
+        {
+            if (i.login == login)
+            {
+                UserInterface.set_and_print("User is already exist");
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+
+
+
+
     internal static void push(User user)
     {
         List<User> users = new List<User>();

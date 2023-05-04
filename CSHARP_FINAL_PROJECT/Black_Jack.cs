@@ -7,10 +7,12 @@
         public static List<Card> deck = new List<Card>();
         public Player p { get; set; } = new Player();
         Dealer d = new Dealer();
-        public Black_Jack()
+        User user = new("name","log","Pass",0,0,0,new(),new());
+        public Black_Jack(User user)
         {
             deck = Card.Schuffle(2);
             deck = Card.Mix(deck);
+            this.user = user;
         }
 
         public void print_menu()
@@ -115,7 +117,9 @@
         }
         public void BJ_init()
         {
-            int bid = p.bid();
+            Console.Clear();
+            int bid = p.bid(user);
+            user.black_jack_b -= bid;
             p.hand.Add(deck[0]);
             deck.Remove(deck[0]);
             p.hand.Add(deck[0]);
@@ -147,14 +151,14 @@
                         else if (selectedCardIndex == 1)
                         {
                             Dealer_draw();
-                            Check();
+                            Check(bid);
                             return;
                         }
                         else if (selectedCardIndex == 2)
                         {
-                            //user.black_jack_b-=bid;
-                            //bid*=2;
-                            //p.hand.Add(deck[0]);
+                            user.black_jack_b-=bid;
+                            bid*=2;
+                            p.hand.Add(deck[0]);
                             deck.Remove(deck[0]);
                             Console.Clear();
                             print_menu();
@@ -196,7 +200,7 @@
                 print_menu();
             }
         }
-        public void Check()
+        public void Check(int bid)
         {
             int biggest_p = p.score;
             int biggest_d = d.score;
@@ -215,7 +219,7 @@
             else if (biggest_d > 21)
             {
                 Console.WriteLine("YOU WIN");
-                //user.black_jack_b+= bid*2;
+                user.black_jack_b+= bid*2;
             }
             else if (biggest_d > biggest_p)
             {
@@ -224,12 +228,12 @@
             else if (biggest_p > biggest_d)
             {
                 Console.WriteLine("YOU WIN");
-                //user.black_jack_b+= bid*2;
+                user.black_jack_b+= bid*2;
             }
             else if (biggest_p == biggest_d)
             {
                 Console.WriteLine("TIE");
-                //user.black_jack_b+= bid;
+                user.black_jack_b+= bid;
             }
         }
     }
@@ -263,12 +267,33 @@
             UserInterface.set_and_print(buf);
             UserInterface.set_and_print(mask);
         }
-        public int bid()
+        public int bid(User user)
         {
-            //Console.WriteLine("Write your bet");
-            //bid = Console.ReadLine();
-            //user.black_jack_b-=bid;
-            return 0;
+            bool leaver = true;
+            int bidd = 0;
+            while (leaver)
+            {
+                Console.Clear();
+                UserInterface.set_and_print("Write your bet:");
+                try
+                {
+                    bidd = Convert.ToInt32(Console.ReadLine());
+                    if (bidd <= user.black_jack_b)
+                    {
+                        leaver = false;
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                }
+                catch (Exception)
+                {
+
+                    UserInterface.set_and_print("Wrong bet");
+                }
+            }
+            return bidd;
         }
     }
 
