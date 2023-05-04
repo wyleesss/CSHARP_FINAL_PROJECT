@@ -1,6 +1,8 @@
 ﻿using BJ;
 using Durak;
 using YonatanMankovich.SimpleConsoleMenus;
+using System.Runtime.Serialization.Formatters.Binary;
+#pragma warning disable SYSLIB0011
 
 static class UserInterface
 {
@@ -311,7 +313,7 @@ static class UserInterface
                                 print_bj_logo();
                                 Console.WriteLine("\n\n\n");
                                 loading();
-                                Black_Jack bj = new();
+                                Black_Jack bj = new(us);
                                 bj.BJ_init();
                                 Console.ReadKey();  
                                 break;
@@ -462,7 +464,27 @@ static class UserInterface
                     }
                     break;
                 case 5:
-                    Console.Clear();
+                    Console.Clear(); //exit
+                    BinaryFormatter formatter = new();
+                    List<User> users = new List<User>();
+
+                    using (Stream fStream = File.OpenRead("..\\..\\..\\DB.bin"))
+                    {
+                        users = (List<User>)formatter.Deserialize(fStream);
+                    }
+
+                    for (int i = 0; i < users.Count; i++)
+                    {
+                        if (users[i].login == us.login && users[i].password == us.password)
+                        {
+                            users[i] = us;
+                        }
+                    }
+                    using (var st = new FileStream("..\\..\\..\\DB.bin", FileMode.Create, FileAccess.Write))
+                    {
+                        formatter.Serialize(st, users);
+                    }
+
                     Environment.Exit(0);
                     break; 
             }
@@ -557,6 +579,16 @@ static class UserInterface
                         break;
                     }
 
+                    if (!SerialDB.reg_check(input_login))
+                    {
+                        Console.Clear();
+                        Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n");
+                        set_and_print("LOGIN IS ALREADY EXIST");
+                        Thread.Sleep(2000);
+                        Console.Clear();
+                        break;
+                    }
+
                     Console.WriteLine();
 
                     set_and_print("Password: ", Console.Write);
@@ -570,16 +602,15 @@ static class UserInterface
 
                     Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n");
                     set_and_print("SIGN UP CONFIRMED");
-                    Console.Clear();
                     Thread.Sleep(2000);
+                    Console.Clear();
 
-                    User user = new(input_user_name, input_login, input_password, 0, 0, 5, new(), new());
+                    User user = new(input_user_name, input_login, input_password, 1000, 1000, 5, new(), new());
                     SerialDB.push(user);
 
                     return user;
 
                 case 2:
-
                     Console.Clear();
                     Environment.Exit(0);
                     break;
