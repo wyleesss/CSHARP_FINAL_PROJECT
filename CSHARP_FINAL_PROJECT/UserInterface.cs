@@ -176,9 +176,9 @@ static class UserInterface
     }
 
 
-    internal static void balance_print(int num) 
+    internal static void balance_print(long num) 
     {
-        
+        set_and_print(Convert.ToString(num), Console.Write);
     }
 
     internal static void main_menu(User us) 
@@ -193,8 +193,8 @@ static class UserInterface
         IEnumerable<string> options_2 = new List<string>() { "Start", "Exit " };
         SimpleConsoleMenu otherg = new SimpleConsoleMenu("Choose an option:", options_2);
 
-        IEnumerable<string> bJ = new List<string>() { "Start", "Balance", "Exit " };
-        SimpleConsoleMenu bj_menu = new SimpleConsoleMenu("Choose an option:", options_2);
+        IEnumerable<string> bJ = new List<string>() { "Start  ", "Balance", "Exit   " };
+        SimpleConsoleMenu bj_menu = new SimpleConsoleMenu("Choose an option:", bJ);
 
         SimpleConsoleMenu about = new SimpleConsoleMenu("                ", "Exit ");
 
@@ -289,9 +289,9 @@ static class UserInterface
                         print_bj_logo();
                         Console.WriteLine("\n\n\n\n\n\n");
 
-                        otherg.Show();
+                        bj_menu.Show();
 
-                        switch (otherg.SelectedIndex)
+                        switch (bj_menu.SelectedIndex)
                         {
                             case 0:
                                 Console.Clear();
@@ -303,7 +303,18 @@ static class UserInterface
                                 bj.BJ_init();
                                 Console.ReadKey();  
                                 break;
+
                             case 1:
+                                Console.Clear();
+                                Console.WriteLine();
+                                print_bj_logo();
+                                Console.WriteLine("\n\n\n\n\n");
+
+                                set_and_print("Balance: ", Console.Write);
+                                Console.Write(us.black_jack_b);
+                                Console.ReadKey();
+                                break;
+                            case 2:
                                 run = false;
                                 Console.Clear();
                                 break;

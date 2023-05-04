@@ -431,6 +431,7 @@
                             if (koloda.Count <= 6 && player.koloda.Count == 0)
                             {
                                 ConsoleUpdate("+++++++[WIN]++++++++", 0);
+                                
                                 Console.ReadKey();
                                 return;
                             }
