@@ -146,9 +146,6 @@
             return index;
         }
 
-        //static List<int> find_same_cards_indices()
-        //{
-        //}
         public int attack(List<Card> game_table, int game_koloda_count)
         {
             bool only_koz = true;

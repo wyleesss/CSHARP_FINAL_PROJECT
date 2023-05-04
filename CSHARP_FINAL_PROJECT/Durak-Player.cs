@@ -2,15 +2,18 @@
 {
     class Player
     {
+        public User user { get; set; }
+
         public string name { get; }
         public List<Card> koloda { get; set; } = new();
         public char koz { get; set; }
         public List<SpecialAbilities> sa { get; }
         public bool is_playing { get; set; } = false;
 
-        public Player(string name, List<SpecialAbilities> sa)
+        public Player(User user, List<SpecialAbilities> sa)
         {
-            this.name = name;
+            this.user = user;
+            this.name = user.user_name;
             this.sa = sa;
         }
 

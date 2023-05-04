@@ -9,6 +9,7 @@
         List<Card> koloda;
         List<Card> rebound = new();
         char trump_suit;
+        int min_card;
 
         List<Card> game_table = new();
 
@@ -17,6 +18,7 @@
             Random random = new();
             this.player = player;
             this.bb = bb;
+            this.min_card = min_card;
 
             koloda = Card.Schuffle(min_card);
             koloda = Card.Mix(koloda);
@@ -283,7 +285,30 @@
 
                         if (koloda.Count == 0 && player.koloda.Count == 0)
                         {
-                            ConsoleUpdate("+++++++[WIN]+++++++", 0);
+                            int money = 0;
+
+                            if (min_card == 9)
+                            {
+                                money = 100;
+                            }
+                            else if (min_card == 7)
+                            {
+                                money = 200;
+                            }
+                            else if (min_card == 6)
+                            {
+                                money = 300;
+                            }
+                            else if(min_card == 2)
+                            {
+                                money = 500;
+                            }
+
+                            ConsoleUpdate($"+++++++[WIN]| bj:: +{money} |+++++++", 0);
+
+                            player.user.black_jack_b += money;
+                            Console.ReadKey();
+
                             return;
                         }
 
@@ -299,6 +324,7 @@
                             if (koloda.Count <= 6 && bb.koloda.Count == 0)
                             {
                                 ConsoleUpdate("-------[DEFEAT]-------", 0);
+                                Console.ReadKey();
                                 return;
                             }
 
@@ -430,8 +456,28 @@
 
                             if (koloda.Count <= 6 && player.koloda.Count == 0)
                             {
-                                ConsoleUpdate("+++++++[WIN]++++++++", 0);
-                                
+                                int money = 0;
+
+                                if (min_card == 9)
+                                {
+                                    money = 100;
+                                }
+                                else if (min_card == 7)
+                                {
+                                    money = 200;
+                                }
+                                else if (min_card == 6)
+                                {
+                                    money = 300;
+                                }
+                                else if (min_card == 2)
+                                {
+                                    money = 500;
+                                }
+
+                                ConsoleUpdate($"+++++++[WIN]| bj:: +{money} |+++++++", 0);
+                                player.user.black_jack_b += money;
+
                                 Console.ReadKey();
                                 return;
                             }
@@ -508,11 +554,32 @@
 
             if (player.koloda.Count == 0)
             {
-                ConsoleUpdate("+++++++[WIN]++++++++", 0);
+                int money = 0;
+
+                if (min_card == 9)
+                {
+                    money = 100;
+                }
+                else if (min_card == 7)
+                {
+                    money = 200;
+                }
+                else if (min_card == 6)
+                {
+                    money = 300;
+                }
+                else if (min_card == 2)
+                {
+                    money = 500;
+                }
+
+                ConsoleUpdate($"+++++++[WIN bj:: {money}]++++++++", 0);
+                Console.ReadKey();
             }
             else
             {
                 ConsoleUpdate("-------[DEFEAT]-------", 0);
+                Console.ReadKey();
             }
 
         }

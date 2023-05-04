@@ -1,8 +1,5 @@
 ﻿using BJ;
 using Durak;
-using Microsoft.CSharp.RuntimeBinder;
-using System.ComponentModel;
-using System.Xml.Linq;
 using YonatanMankovich.SimpleConsoleMenus;
 
 static class UserInterface
@@ -17,8 +14,39 @@ static class UserInterface
         foreach (string element in elements)
         {
             left = (WIDTH / 2) - ((element.Length + step) / 2);
-            Console.SetCursorPosition(left, Console.CursorTop);
+            try
+            {
+                Console.SetCursorPosition(left, Console.CursorTop);
+            }
+            catch
+            { }
+            finally
+            {
+                if (d != null)
+                {
+                    d(element);
+                }
 
+                else
+                {
+                    Console.WriteLine(element);
+                }
+            }
+        }
+    }
+
+    internal static void set_and_print(string element, print_delegate? d = null, int step = 0)
+    {
+        int left = (WIDTH / 2) - ((element.Length + step) / 2);
+
+        try
+        {
+            Console.SetCursorPosition(left, Console.CursorTop);
+        }
+        catch
+        { }
+        finally
+        {
             if (d != null)
             {
                 d(element);
@@ -28,22 +56,6 @@ static class UserInterface
             {
                 Console.WriteLine(element);
             }
-        }
-    }
-
-    internal static void set_and_print(string element, print_delegate? d = null, int step = 0)
-    {
-        int left = (WIDTH / 2) - ((element.Length + step) / 2);
-        Console.SetCursorPosition(left, Console.CursorTop);
-
-        if (d != null)
-        {
-            d(element);
-        }
-
-        else
-        {
-            Console.WriteLine(element);
         }
     }
 
@@ -231,7 +243,7 @@ static class UserInterface
                                 loading();
 
 
-                                game = new(9, new(us.user_name, new()), new());
+                                game = new(9, new(us, new()), new());
                                 game.Start();
                                 Console.ReadKey();
                                 break;
@@ -243,7 +255,7 @@ static class UserInterface
                                 loading();
 
 
-                                game = new(7, new(us.user_name, new()), new());
+                                game = new(7, new(us, new()), new());
                                 game.Start();
                                 Console.ReadKey();
                                 break;
@@ -255,7 +267,7 @@ static class UserInterface
                                 loading();
 
 
-                                game = new(6, new(us.user_name, new()), new());
+                                game = new(6, new(us, new()), new());
                                 game.Start();
 
                                 Console.ReadKey();
@@ -270,7 +282,7 @@ static class UserInterface
                                 loading();
 
 
-                                game = new(2, new(us.user_name, new()), new());
+                                game = new(2, new(us, new()), new());
                                 game.Start();
                                 Console.ReadKey();
                                 break;
