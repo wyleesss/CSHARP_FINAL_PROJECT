@@ -156,8 +156,11 @@
                         }
                         else if (selectedCardIndex == 2)
                         {
-                            user.black_jack_b-=bid;
-                            bid*=2;
+                            if (user.black_jack_b >= bid)
+                            {
+                                user.black_jack_b -= bid;
+                                bid *= 2;
+                            }
                             p.hand.Add(deck[0]);
                             deck.Remove(deck[0]);
                             Console.Clear();
@@ -274,13 +277,18 @@
             while (leaver)
             {
                 Console.Clear();
-                UserInterface.set_and_print("Write your bet:");
+                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n");
+                UserInterface.set_and_print("WRITE YOUR BET:");
                 try
                 {
+                    UserInterface.set_and_print("",Console.Write);
                     bidd = Convert.ToInt32(Console.ReadLine());
-                    if (bidd <= user.black_jack_b)
+                    if (bidd >= 0)
                     {
-                        leaver = false;
+                        if (bidd <= user.black_jack_b)
+                        {
+                            leaver = false;
+                        }
                     }
                     else
                     {
