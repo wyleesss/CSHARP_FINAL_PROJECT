@@ -144,7 +144,7 @@
                             print_menu();
                             if (p.score > 21)
                             {
-                                Console.WriteLine("YOU LOSE");
+                                UserInterface.set_and_print("YOU LOSE");
                                 return;
                             }
                         }
@@ -156,15 +156,18 @@
                         }
                         else if (selectedCardIndex == 2)
                         {
-                            user.black_jack_b-=bid;
-                            bid*=2;
+                            if (user.black_jack_b >= bid)
+                            {
+                                user.black_jack_b -= bid;
+                                bid *= 2;
+                            }
                             p.hand.Add(deck[0]);
                             deck.Remove(deck[0]);
                             Console.Clear();
                             print_menu();
                             if (p.score > 21)
                             {
-                                Console.WriteLine("YOU LOSE");
+                                UserInterface.set_and_print("YOU LOSE");
                                 return;
                             }
                         }
@@ -214,25 +217,25 @@
             }
             if (biggest_p > 21)
             {
-                Console.WriteLine("YOU LOSE");
+                UserInterface.set_and_print("YOU LOSE");
             }
             else if (biggest_d > 21)
             {
-                Console.WriteLine("YOU WIN");
+                UserInterface.set_and_print("YOU WIN");
                 user.black_jack_b+= bid*2;
             }
             else if (biggest_d > biggest_p)
             {
-                Console.WriteLine("YOU LOSE");
+                UserInterface.set_and_print("YOU LOSE");
             }
             else if (biggest_p > biggest_d)
             {
-                Console.WriteLine("YOU WIN");
+                UserInterface.set_and_print("YOU WIN");
                 user.black_jack_b+= bid*2;
             }
             else if (biggest_p == biggest_d)
             {
-                Console.WriteLine("TIE");
+                UserInterface.set_and_print("TIE");
                 user.black_jack_b+= bid;
             }
         }
@@ -274,13 +277,18 @@
             while (leaver)
             {
                 Console.Clear();
-                UserInterface.set_and_print("Write your bet:");
+                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n");
+                UserInterface.set_and_print("WRITE YOUR BET:");
                 try
                 {
+                    UserInterface.set_and_print("",Console.Write);
                     bidd = Convert.ToInt32(Console.ReadLine());
-                    if (bidd <= user.black_jack_b)
+                    if (bidd >= 0)
                     {
-                        leaver = false;
+                        if (bidd <= user.black_jack_b)
+                        {
+                            leaver = false;
+                        }
                     }
                     else
                     {
@@ -290,7 +298,8 @@
                 catch (Exception)
                 {
 
-                    UserInterface.set_and_print("Wrong bet");
+                    UserInterface.set_and_print("WRONG BET");
+                    Thread.Sleep(1000);
                 }
             }
             return bidd;
