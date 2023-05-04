@@ -109,15 +109,37 @@
         }
         int find_min_card_index()
         {
+            bool only_koz = true;
+
+            foreach (Card card in koloda)
+            {
+                if (card.suit != koz)
+                {
+                    only_koz = false;
+                    break;
+                }
+            }
+
             int min_number = int.MaxValue;
             int index = 0;
 
             for (int i = 0; i < koloda.Count; i++)
             {
-                if (koloda[i].number < min_number)
+                if (!only_koz)
                 {
-                    min_number = koloda[i].number;
-                    index = i;
+                    if (koloda[i].number < min_number && koloda[i].suit != koz)
+                    {
+                        min_number = koloda[i].number;
+                        index = i;
+                    }
+                }
+                else
+                {
+                    if (koloda[i].number < min_number)
+                    {
+                        min_number = koloda[i].number;
+                        index = i;
+                    }
                 }
             }
 

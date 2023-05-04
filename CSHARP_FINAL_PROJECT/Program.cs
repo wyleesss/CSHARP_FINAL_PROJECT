@@ -1,5 +1,4 @@
-﻿using Durak;
-using System.Text;
+﻿using System.Text;
 using static UserInterface;
 
 class Program
@@ -10,6 +9,5 @@ class Program
         Console.OutputEncoding = Encoding.UTF8;
         User user = sign_menu();
         main_menu(user);
-
     }
 }
