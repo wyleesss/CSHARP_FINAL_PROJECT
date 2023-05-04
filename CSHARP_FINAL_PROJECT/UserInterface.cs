@@ -175,6 +175,12 @@ static class UserInterface
         }
     }
 
+
+    internal static void balance_print(int num) 
+    {
+        
+    }
+
     internal static void main_menu(User us) 
     {
         IEnumerable<string> options = new List<string>() { "Durak   ", "BlackJack", "Memory  ", "Info    ", "About us","Exit    " };
@@ -186,6 +192,9 @@ static class UserInterface
 
         IEnumerable<string> options_2 = new List<string>() { "Start", "Exit " };
         SimpleConsoleMenu otherg = new SimpleConsoleMenu("Choose an option:", options_2);
+
+        IEnumerable<string> bJ = new List<string>() { "Start", "Balance", "Exit " };
+        SimpleConsoleMenu bj_menu = new SimpleConsoleMenu("Choose an option:", options_2);
 
         SimpleConsoleMenu about = new SimpleConsoleMenu("                ", "Exit ");
 
@@ -439,6 +448,7 @@ static class UserInterface
 
     internal static User sign_menu()
     {
+        Console.Title = "ЄХЯЗ";
         string input_user_name = string.Empty;
         string input_login = string.Empty;
         string input_password = string.Empty;
@@ -484,8 +494,8 @@ static class UserInterface
                             Console.Clear();
                             Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n");
                             set_and_print("INCORRECT LOGIN/PASSWORD");
-                            //input_login = string.Empty;
-                            //input_password = string.Empty;
+                            input_login = string.Empty;
+                            input_password = string.Empty;
                             Thread.Sleep(2000);
                             Console.Clear();
                         }
