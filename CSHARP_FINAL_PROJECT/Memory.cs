@@ -10,8 +10,10 @@
         public Card[,] board = new Card[4, 8];
         Card[,] tempboard = new Card[4, 8];
         Player player = new Player();
-        public Memory()
+        User user;
+        public Memory(User user)
         {
+            this.user = user;
             List<Card> tempdeck;
             tempdeck = Card.Schuffle(11, 2);
             tempdeck = Card.Mix(tempdeck);
@@ -222,8 +224,9 @@
             left = (width / 2) - (text.Length / 2);
             Console.SetCursorPosition(left, Console.CursorTop);
             Console.WriteLine(text);
+            UserInterface.set_and_print("(bj :: +1500)");
+            user.black_jack_b += 1500;
             Console.ReadKey();
-
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using BJ;
 using Durak;
 using YonatanMankovich.SimpleConsoleMenus;
-using System.Runtime.Serialization.Formatters.Binary;
-#pragma warning disable SYSLIB0011
 
 static class UserInterface
 {
@@ -189,7 +187,6 @@ static class UserInterface
         }
     }
 
-
     internal static void balance_print(long num) 
     {
         set_and_print(Convert.ToString(num), Console.Write);
@@ -247,6 +244,7 @@ static class UserInterface
 
                                 game = new(9, new(us, new()), new());
                                 game.Start();
+                                SerialDB.update(us);
                                 Console.ReadKey();
                                 break;
                             case 1:
@@ -259,6 +257,7 @@ static class UserInterface
 
                                 game = new(7, new(us, new()), new());
                                 game.Start();
+                                SerialDB.update(us);
                                 Console.ReadKey();
                                 break;
                             case 2:
@@ -271,6 +270,7 @@ static class UserInterface
 
                                 game = new(6, new(us, new()), new());
                                 game.Start();
+                                SerialDB.update(us);
 
                                 Console.ReadKey();
 
@@ -286,6 +286,7 @@ static class UserInterface
 
                                 game = new(2, new(us, new()), new());
                                 game.Start();
+                                SerialDB.update(us);
                                 Console.ReadKey();
                                 break;
                             case 4:
@@ -315,6 +316,7 @@ static class UserInterface
                                 loading();
                                 Black_Jack bj = new(us);
                                 bj.BJ_init();
+                                SerialDB.update(us);
                                 Console.ReadKey();  
                                 break;
 
@@ -353,8 +355,9 @@ static class UserInterface
                                 print_memory_logo();
                                 Console.WriteLine("\n\n\n");
                                 loading();
-                                MM.Memory m = new();
+                                MM.Memory m = new(us);
                                 m.game();
+                                SerialDB.update(us);
                                 break;
                             case 1:
                                 run = false;
@@ -376,8 +379,8 @@ static class UserInterface
                         set_and_print("Programers:");
                         set_and_print("Prosto_Alex : 5375411417903080");
                         set_and_print("Tanyok : 4149499159434339     ");
-                        set_and_print("4elovel : -                   ");
-                        set_and_print("wyleesss : -                  ");
+                        set_and_print("4elovel : - :(                ");
+                        set_and_print("wyleesss : 5375411417917064   ");
                         Console.WriteLine();
                         set_and_print("Story:");
                         set_and_print("Hello everyone, I'm Alex, I'm 16 and this is our little project. I am a leader, and I can say that I am extremely");
@@ -410,9 +413,8 @@ static class UserInterface
                         {
                             case 0:
                                 Console.Clear();
-                                Console.WriteLine("\n\n\n\n\n\n");
+                                Console.WriteLine("\n\n\n\n\n\n\n");
                                 set_and_print("“Durak” is a card game whose goal is to get rid of all of its cards by staying the opponent`s cards higher.       ");
-
                                 set_and_print("The rules of the game in the \"fool\" are quite simple.                                                             ");
                                 set_and_print("Each player gets 6 cards, the remaining cards remain in the pile.                                                  ");
                                 set_and_print("The peculiarity of the game is that the kozir (suit, which in this game has the most of all colors)                ");
@@ -422,11 +424,15 @@ static class UserInterface
                                 set_and_print("If the player cannot stay the card, he must remove all cards from the table and add them to his own.               ");
                                 set_and_print("In a Durak , the right and left arrows are also used to move, the up arrow is used to select an action,            ");
                                 set_and_print("the down arrow is used to end the move, finish adding cards, or if it is impossible to beat (to pick up cards).    ");
+                                set_and_print("for winning a 24 cards deck game you'll get 300 bj money, for 32 cards deck game - 500, 36 => 700, 54 => 1000.     ");
                                 Console.ReadKey();
                                 break;
                             case 1: 
                                 Console.Clear();
-                                Console.WriteLine("\n\n\n\n\n\n");
+                                Console.WriteLine("\n\n\n");
+                                set_and_print("HINT! if you don't have enough money to bet in blackjack,                                                        ");
+                                set_and_print("you can get some additional income for playing and winning our other games.                                      ");
+                                Console.WriteLine("\n");
                                 set_and_print("\"Blackjack\" is a gamble where the player is competing against the dealer.                                        ");
                                 set_and_print("The game is to score more points than the dealer, not exceeding 21.                                              ");
                                 set_and_print("Each player gets two cards first, and the dealer gets one card.  Each card has its rank and points.              ");
@@ -440,12 +446,13 @@ static class UserInterface
                                 set_and_print("and if the sum of points 17 or more, the dealer stops.                                                           ");
                                 set_and_print("The player wins if his points are more than the dealer, not exceeding 21.                                        ");
                                 set_and_print("If the score of players and dealer is the same, the game is considered a night.                                  ");
+                                set_and_print("for winning, you'll receive a double bet                                                                         ");
                                 Console.ReadKey();
                                 break;
 
                             case 2:
                                 Console.Clear();
-                                Console.WriteLine("\n\n\n\n\n\n");
+                                Console.WriteLine("\n\n\n\n\n\n\n\n");
                                 set_and_print("\"Memory\" is a game where players can test their memory by trying to find a pair of cards.                        ");
                                 set_and_print("The goal of the game is to open 16 pairs of cards.                                                               ");
                                 set_and_print("The cards are facing up and need to be wrapped to find a pair.                                                   ");
@@ -454,6 +461,7 @@ static class UserInterface
                                 set_and_print("The game ends when the player finds all the pairs of pictures.                                                   ");
                                 set_and_print("After the game is over, the player gets a final score, which depends on the number of moves made by the player.  ");
                                 set_and_print("To select a card, you need to enter the number of its trunk, then the line number through the comma.             ");
+                                set_and_print("for winnning you`ll get 1500 bj money                                                                            ");
                                 Console.ReadKey();
                                 break;
                             case 3:
@@ -465,26 +473,8 @@ static class UserInterface
                     break;
                 case 5:
                     Console.Clear(); //exit
-                    BinaryFormatter formatter = new();
-                    List<User> users = new List<User>();
-
-                    using (Stream fStream = File.OpenRead("..\\..\\..\\DB.bin"))
-                    {
-                        users = (List<User>)formatter.Deserialize(fStream);
-                    }
-
-                    for (int i = 0; i < users.Count; i++)
-                    {
-                        if (users[i].login == us.login && users[i].password == us.password)
-                        {
-                            users[i] = us;
-                        }
-                    }
-                    using (var st = new FileStream("..\\..\\..\\DB.bin", FileMode.Create, FileAccess.Write))
-                    {
-                        formatter.Serialize(st, users);
-                    }
-
+                    SerialDB.update(us);
+                    
                     Environment.Exit(0);
                     break; 
             }

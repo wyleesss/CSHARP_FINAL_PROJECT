@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
 #pragma warning disable SYSLIB0011
+
 static class SerialDB
 {
     static BinaryFormatter formatter = new();
@@ -88,6 +89,10 @@ static class SerialDB
         }
     }
 
+
+
+
+
     internal static User take(string login, string password)
     {
         List <User> users = new List<User>();
@@ -111,6 +116,30 @@ static class SerialDB
             }
         }
         throw new Exception("Wrong data");
+    }
+
+
+
+    internal static void update(User us)
+    {
+        List<User> users = new List<User>();
+
+        using (Stream fStream = File.OpenRead("..\\..\\..\\DB.bin"))
+        {
+            users = (List<User>)formatter.Deserialize(fStream);
+        }
+
+        for (int i = 0; i < users.Count; i++)
+        {
+            if (users[i].login == us.login && users[i].password == us.password)
+            {
+                users[i] = us;
+            }
+        }
+        using (var st = new FileStream("..\\..\\..\\DB.bin", FileMode.Create, FileAccess.Write))
+        {
+            formatter.Serialize(st, users);
+        }
     }
 }
 

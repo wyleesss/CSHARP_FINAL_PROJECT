@@ -272,6 +272,8 @@
                         continue;
                     }
 
+                    int bb_start_cards_count = bb.koloda.Count;
+
                     var att = player.attack(game_table, print_info);
 
                     if (att != -1)
@@ -289,19 +291,19 @@
 
                             if (min_card == 9)
                             {
-                                money = 100;
+                                money = 300;
                             }
                             else if (min_card == 7)
                             {
-                                money = 200;
+                                money = 500;
                             }
                             else if (min_card == 6)
                             {
-                                money = 300;
+                                money = 700;
                             }
-                            else if(min_card == 2)
+                            else if (min_card == 2)
                             {
-                                money = 500;
+                                money = 1000;
                             }
 
                             ConsoleUpdate($"+++++++[WIN]| bj:: +{money} |+++++++", 0);
@@ -349,6 +351,9 @@
                                     if (counter == 6)
                                         break;
                                 }
+
+                                if (game_table.Count >= bb_start_cards_count)
+                                    break;
 
                                 add = player.additional_attack(game_table, print_info);
 
@@ -429,6 +434,7 @@
 
                     ConsoleUpdate("×××××××[OPPONENT MOVE]×××××××");
 
+                    int player_start_cards_count = player.koloda.Count;
                     var att = bb.attack(game_table, koloda.Count);
 
                     if (att != -1)
@@ -460,19 +466,19 @@
 
                                 if (min_card == 9)
                                 {
-                                    money = 100;
+                                    money = 300;
                                 }
                                 else if (min_card == 7)
                                 {
-                                    money = 200;
+                                    money = 500;
                                 }
                                 else if (min_card == 6)
                                 {
-                                    money = 300;
+                                    money = 700;
                                 }
                                 else if (min_card == 2)
                                 {
-                                    money = 500;
+                                    money = 1000;
                                 }
 
                                 ConsoleUpdate($"+++++++[WIN]| bj:: +{money} |+++++++", 0);
@@ -503,6 +509,9 @@
                                     if (counter == 6)
                                         break;
                                 }
+
+                                if (game_table.Count >= player_start_cards_count)
+                                    break;
 
                                 add = bb.additional_attack(game_table);
 
@@ -558,22 +567,24 @@
 
                 if (min_card == 9)
                 {
-                    money = 100;
+                    money = 300;
                 }
                 else if (min_card == 7)
                 {
-                    money = 200;
+                    money = 500;
                 }
                 else if (min_card == 6)
                 {
-                    money = 300;
+                    money = 700;
                 }
                 else if (min_card == 2)
                 {
-                    money = 500;
+                    money = 1000;
                 }
 
-                ConsoleUpdate($"+++++++[WIN bj:: {money}]++++++++", 0);
+                ConsoleUpdate($"+++++++[WIN bj:: +{money}]++++++++", 0);
+                player.user.black_jack_b += money;
+
                 Console.ReadKey();
             }
             else
