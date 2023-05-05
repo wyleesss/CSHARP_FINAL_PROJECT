@@ -1,4 +1,6 @@
-﻿namespace Durak
+﻿//автори - Олексій, Нікіта
+
+namespace Durak
 {
     class BOTIK_BATON
     {
@@ -107,6 +109,7 @@
 
             return -1;
         }
+
         int find_min_card_index()
         {
             bool only_koz = true;

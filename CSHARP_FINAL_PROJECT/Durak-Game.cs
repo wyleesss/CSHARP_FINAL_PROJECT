@@ -1,4 +1,6 @@
-﻿namespace Durak
+﻿//автори - Нікіта
+
+namespace Durak
 {
     delegate void print_info(bool expression);
 

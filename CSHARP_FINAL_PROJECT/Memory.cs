@@ -1,4 +1,6 @@
-﻿namespace MM
+﻿//автори - Тетяна
+
+namespace MM
 {
     class Player
     {

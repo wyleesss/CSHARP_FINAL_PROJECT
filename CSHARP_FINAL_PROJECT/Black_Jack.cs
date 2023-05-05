@@ -1,4 +1,6 @@
-﻿namespace BJ
+﻿//автори - Володимир
+
+namespace BJ
 {
     class Black_Jack
     {

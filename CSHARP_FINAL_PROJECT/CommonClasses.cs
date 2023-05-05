@@ -1,6 +1,8 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
 #pragma warning disable SYSLIB0011
 
+//автори - всі по трохи
+
 static class SerialDB
 {
     static BinaryFormatter formatter = new();

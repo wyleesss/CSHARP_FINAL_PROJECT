@@ -2,6 +2,8 @@
 using Durak;
 using YonatanMankovich.SimpleConsoleMenus;
 
+//автори - Олексій
+
 static class UserInterface
 {
     private static int WIDTH = Console.WindowWidth;

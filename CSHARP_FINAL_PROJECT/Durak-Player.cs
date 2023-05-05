@@ -1,4 +1,6 @@
-﻿namespace Durak
+﻿//автори - Нікіта
+
+namespace Durak
 {
     class Player
     {
