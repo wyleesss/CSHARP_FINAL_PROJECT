@@ -71,7 +71,7 @@
                     Console.WriteLine(text);
                 }
             }
-            while (secondcolumn >= 5 || secondrow >= 8 || secondcolumn < 0 || secondrow < 0 || (secondcolumn == firstcolumn && firstrow == secondrow))
+            while (secondcolumn >= 4 || secondrow >= 8 || secondcolumn < 0 || secondrow < 0 || (secondcolumn == firstcolumn && firstrow == secondrow))
             {
                 text = "Enter the position of the second card:";
                 left = (width / 2) - (text.Length / 2);
@@ -94,7 +94,7 @@
                     Console.SetCursorPosition(left, Console.CursorTop);
                     Console.WriteLine(text);
                 }
-                if (secondcolumn >= 5 || secondrow >= 8 || secondcolumn < 0 || secondrow < 0)
+                if (secondcolumn >= 4 || secondrow >= 8 || secondcolumn < 0 || secondrow < 0)
                 {
                     text = "You have entered an invalid number!";
                     left = (width / 2) - (text.Length / 2);
